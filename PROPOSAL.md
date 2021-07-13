@@ -27,59 +27,58 @@ On our app being in a professional setting, manager approval is required to swap
 
 ## Project Timeline:
 
-### Week 1 Goals
-- Sign up, Login, and Logout(Would include making the template pages, user repo, user service, and user class.) : Loveleen
-- Navbar(Would include the template page and role based pages. For example admins has an extra page for accepting schedule changes) : Loveleen
-- Populate the users table with 50 dummy data users. : Joseph & Loveleen
-- Database(Setting up our database and tables for users, shifts, and requests. The users table would have an email and 
-  password with some role logic on if they are a nurse, pca, or manager. As well as the shifts table having an id, user id, date, and any of the 3 
-  different types of shifts. The request table will have the requesters user id, the requestee's user id, the requesters shift id, the requestee's shift id, and the accepted field. 
-  Also for now the only table we will fill with data is the users table we will just set up the base stuff for the shifts table.) : Joseph
-  
-
-### Week 2 Goals
-- Setting up our request object, repo, and service. : Loveleen
-- Setting up our shift object, repo, and service. : Joseph
-- Setting up test cases for shift logic. : Joseph & Loveleen 
-      - Each user has 7 days for work and 7 days off of work.
-      - Make sure there is 1 manager, 2 pcas, and 5 nurses for each shift.
-  
-
-### Week 3 Goals
-- Create template for only manager accounts for accepting shift change requests. : Joseph
-- Set up request logic for users to switch shift schedules. : Joseph
-- Populating the shifts table within the database with dummy shift data for each user.(As of now what that might look like is randomly generating schedules)
-  : Joseph & Loveleen
-- Set up logic for showing 2 5 week periods. : Loveleen
-
-
-### Week 4 Goals
 <dl>
-  <dt> - Setting up logic for highlighting a specific users schedule. : Loveleen
-  <dt> - Style the site with either UIkit or Spectre. : Joseph & Loveleen
-      <dd> - Customize login
-     <dd> - logout
-     <dd> - signup
-     <dd> - Home page
-     <dd> - Admin Requests page
-     <dd> - User Request page
-     <dd> - Submitted Request page
-     <dd> - User Pending Request page
-      <dd> - Navbar     
-  <dt> - If there is time set up the additional feature with an automatic email sent to each user once a shift has been changed. : Joseph & Loveleen
-  <dt> - Bug Testing : Joseph & Loveleen
-    </dl>
+<dt> Week 1 Goals
+<dd>- Sign up, Login, and Logout(Would include making the template pages, user repo, user service, and user class.) : Loveleen
+<dd>- Navbar(Would include the template page and role based pages. For example admins has an extra page for accepting schedule changes) : Loveleen
+<dd>- Populate the users table with 50 dummy data users. : Joseph & Loveleen
+<dd>- Database(Setting up our database and tables for users, shifts, and requests. The users table would have an email and 
+  password with some role logic on if they are a nurse, pca, or manager. As well as the shifts table having an id, user id, date, and any of the 3 
+  different types of shifts. The request table will have the requesters user id, the requestee's user id, the requesters shift id, the requestee's shift id, and the accepted field. Also for now the only table we will fill with data is the users table we will just set up the base stuff for the shifts table.) : Joseph
+  
+
+<dt> Week 2 Goals
+<dd>- Setting up our request object, repo, and service. : Loveleen
+<dd>- Setting up our shift object, repo, and service. : Joseph
+<dd>- Setting up test cases for shift logic. : Joseph & Loveleen 
+<dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Each user has 7 days for work and 7 days off of work.
+<dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Make sure there is 1 manager, 2 pcas, and 5 nurses for each shift.
+  
+
+<dt> Week 3 Goals
+<dd>- Create template for only manager accounts for accepting shift change requests. : Joseph
+<dd>- Set up request logic for users to switch shift schedules. : Joseph
+<dd>- Populating the shifts table within the database with dummy shift data for each user.(As of now what that might look like is randomly generating schedules)
+  : Joseph & Loveleen
+<dd>- Set up logic for showing 2 5 week periods. : Loveleen
 
 
-### Week 5 Goals
-- Practice presentations
-- Finishing touches
+<dt> Week 4 Goals
+  <dd>- Setting up logic for highlighting a specific users schedule. : Loveleen
+  <dd>- Style the site with either UIkit or Spectre. : Joseph & Loveleen
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Customize login
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-logout
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- signup
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Home page
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Admin Requests page
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- User Request page
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Submitted Request page
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- User Pending Request page
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Navbar     
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- If there is time set up the additional feature with an automatic email sent to each user once a shift has been changed. : Joseph & Loveleen
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Bug Testing : Joseph & Loveleen
 
 
-### Technologies
+<dt> Week 5 Goals
+<dd> Practice presentations
+<dd> Finishing touches
+</dl>
+
+## Technologies
 - Spring
 - Java
 - UIKit/Spectre
 - Thymeleaf
 - PostgreSQL
-### https://github.com/loveleen-kaur21/capstoneProject-joe-loveleen
+
+https://github.com/loveleen-kaur21/capstoneProject-joe-loveleen
