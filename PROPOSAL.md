@@ -74,4 +74,4 @@ a schedule with the logged in user's schedule highlighted.
 - UIKit/Spectre
 - Thymeleaf
 - PostgreSQL
-https://github.com/loveleen-kaur21/capstoneProject-joe-loveleen
+### https://github.com/loveleen-kaur21/capstoneProject-joe-loveleen
