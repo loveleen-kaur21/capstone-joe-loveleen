@@ -12,11 +12,10 @@ On our app being in a professional setting, manager approval is required to swap
 
 
 ## Core User Workflows
-We are building an application that requires user login based on roles. A user can sign up with the role of either Nurse, Personal Care Assistant, or Manager. 
-Nurses and Personal Care Assistants are limited to a user only view. This means that the user can only view their own schedules and others' schedule and send shift trade
-requests. Whereas if a user was a Manager, the manager will have access to an Admin based view. The admin based view is given all accessibities of a User based view
-with the added factor of accepting or denying shift trade requests. Managers can also personally move shifts around. This application will have a calendar representing
-a schedule with the logged in user's schedule highlighted. 
+- Login 
+- Logout
+- Sign Up
+  - Accounts associates with a Role
 
 
 ## Project Timeline:
