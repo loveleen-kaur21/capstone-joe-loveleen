@@ -48,19 +48,21 @@ a schedule with the logged in user's schedule highlighted.
 
 
 ### Week 4 Goals
-- Setting up logic for highlighting a specific users schedule. : Loveleen
-- Style the site with either UIkit or Spectre. : Joseph & Loveleen
-      - Customize login
-      - logout
-      - signup
-      - Home page
-      - Admin Requests page
-      - User Request page
-      - Submitted Request page
-      - User Pending Request page
-      - Navbar     
-- If there is time set up the additional feature with an automatic email sent to each user once a shift has been changed. : Joseph & Loveleen
-- Bug Testing : Joseph & Loveleen
+<dl>
+  <dt> - Setting up logic for highlighting a specific users schedule. : Loveleen
+  <dt> - Style the site with either UIkit or Spectre. : Joseph & Loveleen
+      <dd> - Customize login
+     <dd> - logout
+     <dd> - signup
+     <dd> - Home page
+     <dd> - Admin Requests page
+     <dd> - User Request page
+     <dd> - Submitted Request page
+     <dd> - User Pending Request page
+      <dd> - Navbar     
+  <dt> - If there is time set up the additional feature with an automatic email sent to each user once a shift has been changed. : Joseph & Loveleen
+  <dt> - Bug Testing : Joseph & Loveleen
+    </dl>
 
 
 ### Week 5 Goals
