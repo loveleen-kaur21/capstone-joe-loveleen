@@ -15,7 +15,14 @@ On our app being in a professional setting, manager approval is required to swap
 - Login 
 - Logout
 - Sign Up
-  - Accounts associates with a Role
+  - Accounts associates with a Role (Nurse, Personal Care Assisstant, or Manager)
+- User can view schedule
+  - Everyone's schedule is shown
+  - User's own schedule is highlight
+  - Manager can manually switch shifts
+- User can request shift change
+  - Manager can accept/ decline shift changes requests
+  - User can view all pending shift requests
 
 
 ## Project Timeline:
