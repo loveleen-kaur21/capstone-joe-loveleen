@@ -15,16 +15,16 @@ On our app being in a professional setting, manager approval is required to swap
 - Login 
 - Logout
 - Sign Up
-  - Accounts associates with a Role (Nurse, Personal Care Assisstant, or Manager)
+  - Each account associates with a Role (Nurse, Personal Care Assisstant, or Manager). A Nurse and Personal Care Assisstant have "user" privileges. A Manager has "admin" privileges.
 - User can view schedule
-  - Everyone's schedule is shown
-  - User's own schedule is highlight
-  - Manager can manually switch shifts
-  - Shows 2 5-weekk Period Schedules
-- User can request shift change
-  - Manager can accept/ decline shift changes requests
-  - User can view all pending shift requests
-  -
+  - Everyone's schedule is shown (User and Admin)
+  - User's own schedule is highlight (User and Admin)
+  - Manager can manually switch shifts (Only for Admin)
+  - Shows 2 5-week Period Schedules (User and Admin)
+- Only User can request shift change 
+  - Only Manager can accept/ decline shift changes requests
+  - User can view their pending shift requests
+  - Manager can view all pending shift requests to accept or decline. 
 
 
 ## Project Timeline:
@@ -58,17 +58,17 @@ On our app being in a professional setting, manager approval is required to swap
 <dt> Week 4 Goals
   <dd>- Setting up logic for highlighting a specific users schedule. : Loveleen
   <dd>- Style the site with either UIkit or Spectre. : Joseph & Loveleen
-      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Customize login
-      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-logout
-      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- signup
-      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Home page
-      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Admin Requests page
-      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- User Request page
-      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Submitted Request page
-      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- User Pending Request page
-      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Navbar     
-      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- If there is time set up the additional feature with an automatic email sent to each user once a shift has been changed. : Joseph & Loveleen
-      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Bug Testing : Joseph & Loveleen
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* login
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* logout
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* signup
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Home page
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Admin Requests page
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* User Request page
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Submitted Request page
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* User Pending Request page
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Navbar     
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* If there is time set up the additional feature with an automatic email sent to each user once a shift has been changed. : Joseph & Loveleen
+      <dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Bug Testing : Joseph & Loveleen
 
 
 <dt> Week 5 Goals
