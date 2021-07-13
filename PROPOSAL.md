@@ -20,9 +20,11 @@ On our app being in a professional setting, manager approval is required to swap
   - Everyone's schedule is shown
   - User's own schedule is highlight
   - Manager can manually switch shifts
+  - Shows 2 5-weekk Period Schedules
 - User can request shift change
   - Manager can accept/ decline shift changes requests
   - User can view all pending shift requests
+  -
 
 
 ## Project Timeline:
@@ -50,7 +52,7 @@ On our app being in a professional setting, manager approval is required to swap
 <dd>- Set up request logic for users to switch shift schedules. : Joseph
 <dd>- Populating the shifts table within the database with dummy shift data for each user.(As of now what that might look like is randomly generating schedules)
   : Joseph & Loveleen
-<dd>- Set up logic for showing 2 5 week periods. : Loveleen
+<dd>- Set up logic for showing 2 5-week periods. : Loveleen
 
 
 <dt> Week 4 Goals
