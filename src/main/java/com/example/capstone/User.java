@@ -23,6 +23,17 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
 
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
+
     public long getId() {
         return id;
     }
