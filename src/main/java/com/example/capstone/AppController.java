@@ -62,7 +62,7 @@ public class AppController {
         user.setPassword(encodedPassword);
 
         userRepo.save(user);
-        return "index";
+        return "login";
     }
 
     @GetMapping("/login")
