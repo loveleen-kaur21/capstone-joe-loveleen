@@ -15,14 +15,20 @@
 <nav class="uk-navbar-container" uk-navbar th:fragment="navbar">
   <div class="uk-navbar-left">
     <ul class="uk-navbar-nav">
-      <li class="uk-active"><a href="/schedule">View Schedule</a></li>
-      <li class="uk-parent"><a href="/request_change">Request a Change</a></li>
+      <li class="uk-active"><a th:href="@{/user/schedule}">View Schedule</a></li>
+      <li class="uk-parent"><a th:href="@{/user/request_change}">Request a Change</a></li>
       <li class="uk-parent" th:if="${#authentication.getPrincipal().getRole() == 'Nurse' || #authentication.getPrincipal().getRole() == 'PCA'}">
-        <a href="/user_view_pending">USER Pending Requests</a>
+        <a th:href="@{/user/user_view_pending}">USER Pending Requests</a>
       </li>
 
       <li class="uk-parent" style="color: black;" th:if="${#authentication.getPrincipal().getRole() == 'Manager'}">
-            <a href="/admin_view_pending">Pending Requests</a>
+            <a th:href="@{/user/admin_view_pending}">Pending Requests</a>
+      </li>
+
+      <li sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+          <button class="uk-button uk-button-primary uk-button-small" type="submit" value="Logout" id="logoutBTN">Logout</button>
+        </form>
       </li>
 
     </ul>

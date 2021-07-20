@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/uikit.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/css/uikit.min.css"/>
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit-icons.min.js"></script>
+    <script src="js/uikit.min.js"></script>
+    <script src="js/uikit-icons.min.js"></script>
+    <title>Schedule View</title>
+</head>
+<body>
+<div th:insert="~{fragments/navbar :: navbar}"></div>
+<h1 class="uk-flex uk-margin-top uk-flex-center">Placeholder</h1>
+
+<div class="uk-overflow-auto">
+    <table class="uk-table uk-table-small uk-table-divider uk-table-striped">
+        <thead>
+        <tr>
+            <th>Employees</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th>6</th>
+            <th>7</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><b>Managers</b></td>
+        </tr>
+        <tr th:each="user: ${listUsers}">
+            <div th:if="${user.role == 'Manager'}">
+                <td th:text="${user.fullName}"></td>
+            </div>
+        </tr>
+        <tr>
+            <td><b>PCAS</b></td>
+        </tr>
+        <tr th:each="user: ${listUsers}">
+            <div th:if="${user.role == 'PCA'}">
+                <td th:text="${user.fullName}"></td>
+            </div>
+        </tr>
+        <tr>
+            <td><b>Nurses</b></td>
+        </tr>
+        <tr th:each="user: ${listUsers}">
+            <div th:if="${user.role == 'Nurse'}">
+                <td th:text="${user.fullName}"></td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

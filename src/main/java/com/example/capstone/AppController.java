@@ -22,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -33,27 +34,38 @@ public class AppController {
 
     private Utility utility;
 
-    @GetMapping("")
-    public String viewHomePage() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
-        }
-        return "index";
+    @GetMapping("/")
+    public String viewPage() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+//            return "login";
+//        }
+
+        return "redirect:/user/home";
     }
 
-    @GetMapping("/users")
-    public String listAll(Model model) {
+    @GetMapping("/user/home")
+    public String viewHomePage(Model model) {
         List<User> listUsers = userRepo.findAll();
         model.addAttribute("listUsers", listUsers);
-
-        return "index";
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+//            return "login";
+//        }
+        return "home";
     }
 
     @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
+    public String showRegistrationForm(Model model, HttpServletRequest request) {
         model.addAttribute("user", new User());
-        return "signup_form.html";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "signup_form.html";
+        }
+//        HttpSession session = request.getSession();
+//        session.invalidate();
+//        SecurityContextHolder.clearContext();
+        return "redirect:/user/home";
     }
 
     @PostMapping("/process_register")
@@ -67,12 +79,16 @@ public class AppController {
     }
 
     @GetMapping("/login")
-    public String loginPage(Model model) {
+    public String loginPage(Model model, HttpServletRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
-        return "redirect:/";
+//         Log out user on delete
+//        HttpSession session = request.getSession();
+//        session.invalidate();
+//        SecurityContextHolder.clearContext();
+        return "redirect:/user/home";
     }
 
     @Configuration
@@ -83,25 +99,25 @@ public class AppController {
         }
     }
 
-    @GetMapping("/admin_view_pending")
+    @GetMapping("/user/admin_view_pending")
     public String showAdminPending(Model model) {
         model.addAttribute("user", new User());
         return "admin_view_pending.html";
     }
 
-    @GetMapping("/user_view_pending")
+    @GetMapping("/user/user_view_pending")
     public String showUserPending(Model model) {
         model.addAttribute("user", new User());
         return "user_view_pending";
     }
 
-    @GetMapping("/schedule")
+    @GetMapping("/user/schedule")
     public String showSchedule(Model model) {
         model.addAttribute("user", new User());
         return "schedule";
     }
 
-    @GetMapping("/request_change")
+    @GetMapping("/user/request_change")
     public String showRequestForm(Model model) {
         model.addAttribute("user", new User());
         return "request_change";
@@ -120,7 +136,11 @@ public class AppController {
     @GetMapping("/forgot_password")
     public String showForgotPasswordForm(Model model) {
         model.addAttribute("pageTitle", "Forgot Password");
-        return "forgot_password_form";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "forgot_password_form.html";
+        }
+        return "redirect:/user/home";
     }
 
     @GetMapping("/reset_password")
