@@ -78,6 +78,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         } else {
             current.setGroup("A");
         }
+        System.out.println(current.getGroup());
         return current;
     }
 

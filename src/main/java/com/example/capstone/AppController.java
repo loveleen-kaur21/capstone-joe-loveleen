@@ -34,6 +34,9 @@ public class AppController {
 
     private Utility utility;
 
+    @Autowired
+    private CustomUserDetailsService customUserService;
+
     @GetMapping("/")
     public String viewPage() {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -73,6 +76,7 @@ public class AppController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodedPassword = encoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+        customUserService.setGroup(user);
 
         userRepo.save(user);
         return "login";
@@ -128,9 +132,6 @@ public class AppController {
 
     @Autowired
     private JavaMailSender mailSender;
-
-    @Autowired
-    private CustomUserDetailsService customUserService;
 
 
     @GetMapping("/forgot_password")
