@@ -40,6 +40,9 @@ public class AppController {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private ShiftService shiftService;
+
     @GetMapping("/")
     public String viewPage() {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -47,6 +50,7 @@ public class AppController {
 //            return "login";
 //        }
 
+        Shift.generateShift();
         return "redirect:/user/home";
     }
 
@@ -219,6 +223,7 @@ public class AppController {
 
         mailSender.send(message);
     }
+
 }
 
 
