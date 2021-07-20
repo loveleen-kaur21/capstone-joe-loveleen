@@ -7,6 +7,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -45,7 +49,41 @@ public class CustomUserDetailsService implements UserDetailsService {
         userRepo.save(user);
     }
 
+    public User setGroup (User current) {
+        List<User> usersA = userRepo.findAll();
+        usersA.removeIf(user -> !user.getRole().equals(current.getRole()));
+        usersA.removeIf(user ->  !user.getGroup().equals("A"));
+        List<User> usersB = userRepo.findAll();
+        usersB.removeIf(user -> !user.getRole().equals(current.getRole()));
+        usersB.removeIf(user -> !user.getGroup().equals("B"));
+
+        if (current.getRole().equals("Manager") && usersA.size() < 3) {
+            current.setGroup("A");
+        } else if (current.getRole().equals("Nurse") && usersA.size() < 15) {
+            current.setGroup("A");
+        } else if (current.getRole().equals("PCA") && usersA.size() < 6) {
+            current.setGroup("A");
+        } else if (current.getRole().equals("Manager") && usersB.size() < 3) {
+            current.setGroup("B");
+        } else if (current.getRole().equals("Nurse") && usersB.size() < 15) {
+            current.setGroup("B");
+        } else if (current.getRole().equals("PCA") && usersB.size() < 6) {
+            current.setGroup("B");
+        } else if (usersB.size() > usersA.size()) {
+            current.setGroup("A");
+        } else if (usersB.size() < usersA.size()) {
+            System.out.println(usersA.size());
+            System.out.println(usersB.size());
+            current.setGroup("B");
+        } else {
+            current.setGroup("A");
+        }
+        return current;
+    }
+
     public void save(User user) {
         userRepo.save(user);
     }
+
+
 }

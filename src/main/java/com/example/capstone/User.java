@@ -26,6 +26,17 @@ public class User {
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
 
+    @Column(name = "group_type")
+    private String group;
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
     public String getResetPasswordToken() {
         return resetPasswordToken;
     }
