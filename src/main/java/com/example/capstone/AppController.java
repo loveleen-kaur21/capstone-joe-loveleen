@@ -32,6 +32,10 @@ public class AppController {
 
     private Utility utility;
 
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
+
     @GetMapping("")
     public String viewHomePage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -60,7 +64,7 @@ public class AppController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String encodedPassword = encoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-
+        userDetailsService.setGroup(user);
         userRepo.save(user);
         return "login";
     }
@@ -72,6 +76,7 @@ public class AppController {
             return "login";
         }
         return "redirect:/";
+
     }
     @Configuration
     public static class MvcConfig implements WebMvcConfigurer {
