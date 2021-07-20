@@ -37,6 +37,9 @@ public class AppController {
     @Autowired
     private CustomUserDetailsService customUserService;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
     @GetMapping("/")
     public String viewPage() {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -126,13 +129,6 @@ public class AppController {
         model.addAttribute("user", new User());
         return "request_change";
     }
-
-//    @Controller
-//    public class ForgotPasswordcontroller {
-
-    @Autowired
-    private JavaMailSender mailSender;
-
 
     @GetMapping("/forgot_password")
     public String showForgotPasswordForm(Model model) {
