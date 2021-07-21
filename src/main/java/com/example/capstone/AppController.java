@@ -43,6 +43,9 @@ public class AppController {
     @Autowired
     private ShiftService shiftService;
 
+    @Autowired
+    private ShiftRepository shiftRepo;
+
     @GetMapping("/")
     public String viewPage() {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -50,7 +53,7 @@ public class AppController {
 //            return "login";
 //        }
 
-        Shift.generateShift();
+        shiftService.generateShift();
         return "redirect:/user/home";
     }
 

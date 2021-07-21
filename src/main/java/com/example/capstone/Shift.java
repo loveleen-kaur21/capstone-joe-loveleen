@@ -1,5 +1,7 @@
 package com.example.capstone;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 
 import javax.persistence.*;
@@ -8,10 +10,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
 @Entity
 @Table(name = "shift")
 
 public class Shift {
+
+
+    @Autowired
+    private UserRepository userRepo;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,16 +65,6 @@ public class Shift {
         this.shift = shift;
     }
 
-    public static ArrayList<Shift> generateShift() {
-        ArrayList<Shift> newShifts = new ArrayList<>();
-        for (int i = 0; i < 24; i++) {
-            Shift newShift = new Shift();
-            newShift.setDate(new Date(Calendar.DAY_OF_WEEK_IN_MONTH));
-            newShift.setShift("Night");
-            newShift.setUserID(3);
-            newShifts.add(newShift);
-        }
-        System.out.println(newShifts);
-        return newShifts;
-    }
+
+
 }
