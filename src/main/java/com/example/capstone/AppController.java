@@ -53,7 +53,7 @@ public class AppController {
 //            return "login";
 //        }
 
-        shiftService.generateShift();
+        shiftService.generateGroupAShift();
         return "redirect:/user/home";
     }
 

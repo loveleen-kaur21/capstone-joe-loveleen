@@ -1,14 +1,8 @@
 package com.example.capstone;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Entity
@@ -17,14 +11,13 @@ import java.util.List;
 public class Shift {
 
 
-    @Autowired
-    private UserRepository userRepo;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "userID", nullable = false, unique = true)
+    @Column(name = "userID", nullable = false, unique = false)
     private long userID;
 
     @Column(name = "date", nullable = false)
