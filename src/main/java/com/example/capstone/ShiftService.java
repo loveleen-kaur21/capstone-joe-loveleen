@@ -46,24 +46,39 @@ public class ShiftService {
 //
 //    }
 
-    public static Long dayChecker( ArrayList<Shift> newShifts, int s, Shift newShift, User randomElement, List<User> usersManagersA) {
-        Date checkDate =  newShifts.get(s).getDate();
-        String newShiftDate = checkDate.toString();
+    public static Long dayChecker( ArrayList<Shift> newShifts, Shift newShift, User randomElement, List<User> usersManagersA, ArrayList<Long>userids) {
         Date given = newShift.getDate();
         String givenShiftDate = given.toString();
-//        System.out.println(newShiftDate);
-//        System.out.println(givenShiftDate);
-//        System.out.println(newShiftDate.equalsIgnoreCase(givenShiftDate));
-//        System.out.println(newShifts.get(s).getUserID());
-//        System.out.println(randomElement.getId());
-//        System.out.println(newShifts.get(s).getUserID() == randomElement.getId());
-        if (newShiftDate.equalsIgnoreCase(givenShiftDate)) {
-            if (newShifts.get(s).getUserID() == randomElement.getId()){
-                Random rand = new Random();
-                User newRandom = usersManagersA.get(rand.nextInt(usersManagersA.size()));
-                dayChecker(newShifts, s, newShift, newRandom, usersManagersA);
+        if (newShifts.size() == 0) {
+            for (int s=0; s < newShifts.size(); s++) {
+                Date checkDate = newShifts.get(s).getDate();
+                String newShiftDate = checkDate.toString();
+                while(newShiftDate.equalsIgnoreCase(givenShiftDate) && userids.contains(randomElement.getId())){
+                    Random rand = new Random();
+                    randomElement = usersManagersA.get(rand.nextInt(usersManagersA.size()));
+                }
+                if (!newShiftDate.equalsIgnoreCase(givenShiftDate) && !userids.contains(randomElement.getId())) {
+                    break;
+                }
+            }
+        } else {
+            Shift lastShift = newShifts.get(newShifts.size() - 1);
+            for (int s=0; s < newShifts.size(); s++) {
+                Date checkDate =  newShifts.get(s).getDate();
+                String newShiftDate = checkDate.toString();
+
+                while (newShiftDate.equalsIgnoreCase(givenShiftDate) && userids.contains(randomElement.getId()) || randomElement.getId() == lastShift.getUserID()){
+                    Random rand = new Random();
+                    randomElement = usersManagersA.get(rand.nextInt(usersManagersA.size()));
+                }
+
+                if (!newShiftDate.equalsIgnoreCase(givenShiftDate) && !userids.contains(randomElement.getId()) && randomElement.getId() != lastShift.getUserID()){
+                    break;
+                }
             }
         }
+
+
         return randomElement.getId();
     }
 
@@ -71,23 +86,25 @@ public class ShiftService {
         ArrayList<Shift> newShifts = new ArrayList<>();
         List<User> usersManagersA = userRepo.findAllByGroupAndRole("A", "Manager");
         String[] shifts = {"Day", "Evening", "Night"};
+        ArrayList<Long> userids;
         for (int i = 0; i < 7; i++) {
             if (newShifts.size() == 0) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DATE, 1);
+                userids = new ArrayList<>();
                 for (int j = 0; j <3; j++) {
                     Shift newShift = new Shift();
                     newShift.setDate(calendar.getTime());
                     newShift.setShift(shifts[j]);
                     Random rand = new Random();
                     User randomElement = usersManagersA.get(rand.nextInt(usersManagersA.size()));
-                    for (int s = 0; s < newShifts.size(); s++) {
-                        newShift.setUserID(dayChecker(newShifts, s, newShift, randomElement, usersManagersA));
-                    }
+                    newShift.setUserID(dayChecker(newShifts, newShift, randomElement, usersManagersA, userids));
                     newShifts.add(newShift);
+                    userids.add(newShift.getUserID());
                     System.out.println(newShift.getDate());
                     System.out.println(newShift.getShift());
                     System.out.println(newShift.getUserID());
+
                 }
             } else {
                 Shift lastNewShift = newShifts.get(newShifts.size() - 1);
@@ -95,19 +112,20 @@ public class ShiftService {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(date);
                 calendar.add(Calendar.DATE, 1);
+                userids = new ArrayList<>();
                 for (int j = 0; j < 3; j++) {
                     Shift newShift = new Shift();
                     newShift.setDate(calendar.getTime());
                     newShift.setShift(shifts[j]);
                     Random rand = new Random();
                     User randomElement = usersManagersA.get(rand.nextInt(usersManagersA.size()));
-                    for (int s = 0; s < newShifts.size(); s++) {
-                        newShift.setUserID(dayChecker(newShifts, s, newShift, randomElement, usersManagersA));
-                    }
+                    newShift.setUserID(dayChecker(newShifts, newShift, randomElement, usersManagersA, userids));
                     newShifts.add(newShift);
+                    userids.add(newShift.getUserID());
                     System.out.println(newShift.getDate());
                     System.out.println(newShift.getShift());
                     System.out.println(newShift.getUserID());
+
                 }
             }
         }
@@ -127,13 +145,11 @@ public class ShiftService {
 //
 //            newShift.setUserID(randomElement.getId());
 //            newShifts.add(newShift);
-////            System.out.println("Shift: ");
-////            System.out.println(newShift.getDate());
-////            System.out.println(newShift.getShift());
-////            System.out.println(newShift.getUserID());
+
 //        }
         return newShifts;
     }
+
 
 
 }
