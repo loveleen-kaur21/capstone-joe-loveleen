@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +25,9 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -58,9 +62,18 @@ public class AppController {
     }
 
     @GetMapping("/user/home")
-    public String viewHomePage(Model model) {
-        List<User> listUsers = userRepo.findAll();
-        model.addAttribute("listUsers", listUsers);
+    public String viewHomePage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        LocalDate startDate = LocalDate.of(2021, 2, 1);
+        LocalDate endDate = startDate.plusDays(6);
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Date newStartDate = Date.from(startDate.atStartOfDay(defaultZoneId).toInstant());
+        Date newEndDate = Date.from(endDate.atStartOfDay(defaultZoneId).toInstant());
+        System.out.println(newStartDate);
+        System.out.println(newEndDate);
+
+        List<Shift> listShifts = shiftRepo.findAllByDateBetween(newStartDate, newEndDate);
+        model.addAttribute("listShifts", listShifts);
+        customUserService.renderUser(model);
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
 //            return "login";
