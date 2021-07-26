@@ -16,18 +16,13 @@
 </head>
 <body>
 <div th:insert="~{fragments/account_navbar :: account_navbar}"></div>
-<div class="container text-center">
-    <div>
+<div>
+    <div class="container text-center">
         <h1>User Registration - Sign Up</h1>
-    </div>
-    <div>
-        <form>
-            <input type="button" value="Go back!" onclick="history.back()">
-        </form>
     </div>
     <form th:action="@{/process_register}" th:object="${user}"
           method="post" style="max-width: 600px; margin: 0 auto;">
-        <div class="m-3">
+        <div>
             <div class="form-group row">
                 <label class="col-4 col-form-label">E-mail: </label>
                 <div class="col-8">
@@ -53,26 +48,30 @@
 
             <div class="form-group row">
                 <label class="col-4 col-form-label">What is your role?</label>
-                <div class="col-8">
-                    <input type="radio" th:field="*{role}" id="Nurse" class="form-control"
-                           required value="Nurse"/>
-                    <label for="Nurse">Nurse</label><br>
+                <div class="uk-flex mt-2 ml-3">
+                    <div>
+                        <input type="radio" th:field="*{role}" id="Nurse" class=""
+                               required value="Nurse"/>
+                        <label for="Nurse">Nurse</label><br>
+                    </div>
 
+                    <div class="uk-margin-left">
+                        <input type="radio" th:field="*{role}" id="PCA" class=""
+                               required value="PCA"/>
+                        <label for="PCA">Personal Care Assistant</label><br>
+                    </div>
 
-                    <input type="radio" th:field="*{role}" id="PCA" class="form-control"
-                           required value="PCA"/>
-                    <label for="PCA">Personal Care Assisstant</label><br>
-
-
-                    <input type="radio" th:field="*{role}" class="form-control" id="Admin"
-                           required value="Manager"/>
-                    <label for="Admin">Manager</label><br>
+                    <div class="uk-margin-left">
+                        <input type="radio" th:field="*{role}" class="" id="Admin"
+                               required value="Manager"/>
+                        <label for="Admin">Manager</label><br>
+                    </div>
 
                 </div>
             </div>
 
             <div>
-                <button type="submit" class="btn btn-primary">Sign Up</button>
+                <button type="submit" class="uk-button uk-button-primary uk-align-center">Sign Up</button>
             </div>
         </div>
     </form>
