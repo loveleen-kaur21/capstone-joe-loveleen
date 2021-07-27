@@ -24,6 +24,9 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Controller
@@ -53,7 +56,8 @@ public class AppController {
 //            return "login";
 //        }
 
-        shiftService.generateGroupAShift();
+        Date date = new GregorianCalendar(2021, Calendar.JUNE, 20).getTime();
+        shiftService.generateShifts(date);
         return "redirect:/user/home";
     }
 
