@@ -19,6 +19,4 @@ public interface ShiftRepository extends JpaRepository<Shift, Long>{
     @Query(value = "SELECT * FROM Shift", nativeQuery = true)
     Shift findAllShift();
 
-    List<Shift> findAllByDateBetween(Date start, Date end);
-    // Get the monday and sunday I care about so I can get the days/dates in between and build the logic in app controller
 }

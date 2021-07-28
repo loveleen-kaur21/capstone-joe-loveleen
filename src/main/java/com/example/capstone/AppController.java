@@ -30,6 +30,9 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,13 +63,11 @@ public class AppController {
 //            return "login";
 //        }
 
-        shiftService.generateGroupAShift();
         return "redirect:/user/home";
     }
 
     @GetMapping("/user/home")
-//    @ResponseBody
-    public String viewHomePage(Model model /*, @RequestParam Date date*/) {
+    public String viewHomePage(Model model) {
         customUserService.renderUser(model);
         shiftService.getDate(model);
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
