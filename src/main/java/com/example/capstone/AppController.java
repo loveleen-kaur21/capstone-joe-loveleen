@@ -5,6 +5,7 @@ import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -29,6 +31,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AppController {
@@ -62,18 +65,10 @@ public class AppController {
     }
 
     @GetMapping("/user/home")
-    public String viewHomePage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        LocalDate startDate = LocalDate.of(2021, 2, 1);
-        LocalDate endDate = startDate.plusDays(6);
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-        Date newStartDate = Date.from(startDate.atStartOfDay(defaultZoneId).toInstant());
-        Date newEndDate = Date.from(endDate.atStartOfDay(defaultZoneId).toInstant());
-        System.out.println(newStartDate);
-        System.out.println(newEndDate);
-
-        List<Shift> listShifts = shiftRepo.findAllByDateBetween(newStartDate, newEndDate);
-        model.addAttribute("listShifts", listShifts);
+//    @ResponseBody
+    public String viewHomePage(Model model /*, @RequestParam Date date*/) {
         customUserService.renderUser(model);
+        shiftService.getDate(model);
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
 //            return "login";
