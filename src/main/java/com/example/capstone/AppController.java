@@ -27,14 +27,10 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class AppController {
@@ -63,13 +59,15 @@ public class AppController {
 //            return "login";
 //        }
 
+        Date date = new GregorianCalendar(2021, Calendar.JUNE, 20).getTime();
+        shiftService.generateShifts(date);
         return "redirect:/user/home";
     }
 
     @GetMapping("/user/home")
     public String viewHomePage(Model model) {
-        customUserService.renderUser(model);
-        shiftService.getDate(model);
+        List<User> listUsers = userRepo.findAll();
+        model.addAttribute("listUsers", listUsers);
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
 //            return "login";
