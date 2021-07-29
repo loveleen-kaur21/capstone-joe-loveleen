@@ -4,10 +4,17 @@ package com.example.capstone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 @Service
 @Transactional
@@ -43,8 +50,11 @@ public class ShiftService {
     public void generateShifts(Date currentDate) {
         Shift lastShift = repo.findLastShift();
         Date lastDate = lastShift.getDate();
-        System.out.println("LOOK HERE " + currentDate.equals(lastDate));
-        if (currentDate.equals(lastDate)) {
+        lastDate = getDateWithoutTimeUsingCalendar(lastDate);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String strCurrentDate = dateFormat.format(currentDate);
+        String strLastDate = dateFormat.format(lastDate);
+        if (strLastDate.equalsIgnoreCase(strCurrentDate)) {
             Long lastShiftUserID = lastShift.getUserID();
             Optional<User> lastShiftUser = userRepo.findById(lastShiftUserID);
             String lastGroup = lastShiftUser.get().getGroup();
@@ -251,6 +261,8 @@ public class ShiftService {
         ArrayList<Long> userids;
         for (int i = 0; i < 7; i++) {
             if (newShifts.size() == 0) {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                String strLastDate = dateFormat.format(lastDate);
                 Calendar calendar = Calendar.getInstance();
                     Shift lastShift = repo.findLastShift();
                     Date date = lastShift.getDate();
@@ -397,6 +409,8 @@ public class ShiftService {
         for (int i = 0; i < 7; i++) {
 
             if (newShifts.size() == 0) {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                String strLastDate = dateFormat.format(lastDate);
                 Calendar calendar = Calendar.getInstance();
                     Shift lastShift = repo.findLastShift();
                     Date date = lastShift.getDate();
@@ -443,6 +457,8 @@ public class ShiftService {
         for (int i = 0; i < 7; i++) {
             if (newShifts.size() == 0) {
 
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                String strLastDate = dateFormat.format(lastDate);
                 Calendar calendar = Calendar.getInstance();
                     Shift lastShift = repo.findLastShift();
                     Date date = lastShift.getDate();
@@ -512,6 +528,8 @@ public class ShiftService {
         for (int i = 0; i < 7; i++) {
             if (newShifts.size() == 0) {
 
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                String strLastDate = dateFormat.format(lastDate);
                 Calendar calendar = Calendar.getInstance();
                     Shift lastShift = repo.findLastShift();
                     Date date = lastShift.getDate();
@@ -616,4 +634,5 @@ public class ShiftService {
         }
         return newShifts;
     }
-    }
+
+}

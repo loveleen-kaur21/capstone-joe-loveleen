@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -84,6 +85,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public void save(User user) {
         userRepo.save(user);
+    }
+
+    public void renderUser(Model model) {
+        List<User> listUsers = userRepo.findAll();
+        model.addAttribute("listUsers", listUsers);
     }
 
 

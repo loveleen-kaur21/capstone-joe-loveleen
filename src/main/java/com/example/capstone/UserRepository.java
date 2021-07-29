@@ -16,8 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
     List<User> findAllByGroupAndRole(String group_type, String role);
 
-//    User findbyID(Long id);
-
 
 
 }

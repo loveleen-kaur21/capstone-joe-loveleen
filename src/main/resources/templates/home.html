@@ -18,19 +18,23 @@
 <body>
 <div th:insert="~{fragments/navbar :: navbar}"></div>
 <h1 class="uk-flex uk-margin-top uk-flex-center">Placeholder</h1>
-
+<!--<a th:text="${shift.date}" th:href="@{/user/home}?{nextStart}">Next</a>-->
 <div class="uk-overflow-auto">
     <table class="uk-table uk-table-small uk-table-divider uk-table-striped">
         <thead>
         <tr>
             <th>Employees</th>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-            <th>5</th>
-            <th>6</th>
-            <th>7</th>
+                <div th:each="shift: ${weeklyShifts}">
+                    <div th:if="shift.id == shift.userID">
+                        <th th:text="shift.date"></th>
+                    </div>
+                </div>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
         </tr>
         </thead>
         <tbody>
@@ -40,6 +44,11 @@
         <tr th:each="user: ${listUsers}">
             <div th:if="${user.role == 'Manager'}">
                 <td th:text="${user.fullName}"></td>
+                <div th:each="shift: ${weeklyShifts}">
+                    <div th:if="${user.id == shift.userID}">
+                        <td th:text="${shift.shift}"></td>
+                    </div>
+                </div>
             </div>
         </tr>
         <tr>
@@ -48,6 +57,11 @@
         <tr th:each="user: ${listUsers}">
             <div th:if="${user.role == 'PCA'}">
                 <td th:text="${user.fullName}"></td>
+                <div th:each="shift: ${weeklyShifts}">
+                    <div th:if="${user.id == shift.userID}">
+                        <td th:text="${shift.shift}"></td>
+                    </div>
+                </div>
             </div>
         </tr>
         <tr>
@@ -56,8 +70,18 @@
         <tr th:each="user: ${listUsers}">
             <div th:if="${user.role == 'Nurse'}">
                 <td th:text="${user.fullName}"></td>
+                <div th:each="shift: ${weeklyShifts}">
+                    <div th:if="${user.id == shift.userID}">
+                        <td th:text="${shift.shift}"></td>
+                    </div>
+                </div>
             </div>
         </tr>
+        <!--        <script th:inline="javascript">-->
+        <!--            for (let dayCounter = 0; dayCounter < 8; i++) {-->
+        <!--                -->
+        <!--            }-->
+        <!--        </script>-->
         </tbody>
     </table>
 </div>
