@@ -20,9 +20,6 @@ public class Request {
     @Column(name = "requesteeID", nullable = false, unique = true)
     private long requesteeID;
 
-    @Column(name = "requesterShiftID", nullable = false, unique = true)
-    private long requesterShiftID;
-
     @Column(name = "requesteeShiftID", nullable = false, unique = true)
     private long requesteeShiftID;
 
@@ -51,14 +48,6 @@ public class Request {
 
     public void setRequesteeID(long requesteeID) {
         this.requesteeID = requesteeID;
-    }
-
-    public long getRequesterShiftID() {
-        return requesterShiftID;
-    }
-
-    public void setRequesterShiftID(long requesterShiftID) {
-        this.requesterShiftID = requesterShiftID;
     }
 
     public long getRequesteeShiftID() {
