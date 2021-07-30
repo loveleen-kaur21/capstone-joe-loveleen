@@ -5,12 +5,10 @@ import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -27,10 +24,10 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.*;
 
 @Controller
 public class AppController {
@@ -66,8 +63,20 @@ public class AppController {
 
     @GetMapping("/user/home")
     public String viewHomePage(Model model) {
-        List<User> listUsers = userRepo.findAll();
-        model.addAttribute("listUsers", listUsers);
+        Date currentDate = java.util.Calendar.getInstance().getTime();
+        customUserService.renderUser(model);
+        ArrayList<Shift> wShifts = shiftService.getShifts(model);
+        System.out.println(wShifts.size());
+//        ArrayList<Shift> sortedWeeksShifts = new ArrayList<>();
+        ArrayList<Date> wShiftsDates = new ArrayList<>();
+        for (int ind = 0; ind < wShifts.size(); ind++) {
+            wShiftsDates.add(wShifts.get(ind).getDate());
+        }
+        Date minDate = Collections.min(wShiftsDates);
+        System.out.println(minDate);
+        List<dateFromRange> list = shiftService.weekDatesList(minDate);
+        model.addAttribute("datesList", list);
+        model.addAttribute("wShifts", wShifts);
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
 //            return "login";
