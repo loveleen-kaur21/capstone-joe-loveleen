@@ -3,6 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Request a Shift Change</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/uikit.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="js/uikit.min.js"></script>
+    <script src="js/uikit-icons.min.js"></script>
+
+    <link rel="stylesheet" href="themes/custom/my_theme/dist/uikit.my_theme.min.css" />
+    <script src="vendor/jquery.js"></script>
+    <script src="dist/js/uikit.min.js"></script>
+    <script src="dist/addons/js/datepicker.js"></script>
+    <link rel="stylesheet" href="dist/addons/css/datepicker.css" />
+
+
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/css/uikit.min.css" />
 
@@ -14,5 +29,43 @@
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
   <h1>Request a Shift Change</h1>
+
+<form class="uk-form-horizontal uk-margin-large" th:action="@{/request_submitted}" th:object="${request_form}">
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-text">Whose shift are you requesting to take?</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" id="form-horizontal-text" type="text" placeholder="Some text..." th:field="*{fullName}">
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-select">Shift</label>
+        <div class="uk-form-controls">
+            <select class="uk-select" id="form-horizontal-select">
+                <option th:field="*{shift}" th:value="Day">Day (6:30am - 2:30pm)</option>
+                <option th:field="*{shift}" th:value="Evening">Evening (2:30pm - 10:30pm)</option>
+                <option th:field="*{shift}" th:value="Night">Night (10:30pm - 6:30am)</option>
+            </select>
+        </div>
+    </div>
+
+
+
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-text">Date of Shift</label>
+        <div class="uk-form-controls">
+            <div class="uk-inline">
+                <span class="uk-form-icon" uk-icon="icon: calendar"></span>
+                <input th:field="*{date}"class="uk-input" type="date" data-uk-datepicker="{format:'DD.MM.YYYY'}" placeholder="(YYYY/MM/DD)">
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+
 </body>
 </html>

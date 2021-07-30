@@ -55,9 +55,10 @@ public class AppController {
 //        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
 //            return "login";
 //        }
+        Date date =java.util.Calendar.getInstance().getTime();
 
-        Date date = new GregorianCalendar(2021, Calendar.JUNE, 20).getTime();
         shiftService.generateShifts(date);
+        Date checkingdate = new GregorianCalendar(2021, Calendar.MARCH, 17).getTime();
         return "redirect:/user/home";
     }
 
@@ -150,8 +151,21 @@ public class AppController {
     @GetMapping("/user/request_change")
     public String showRequestForm(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("request_form", new RequestFormCreation());
         return "request_change";
     }
+
+
+    @PostMapping("/request_submitted")
+    public String processApplication(Request request, @AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("request", new Request());
+
+//        request.setRequesteeID(userId);
+//        appRepo.save(application);
+        return "request_success";
+    }
+
 
     @GetMapping("/forgot_password")
     public String showForgotPasswordForm(Model model) {
