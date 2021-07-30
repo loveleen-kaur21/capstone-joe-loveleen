@@ -30,7 +30,7 @@
 
   <h1>Request a Shift Change</h1>
 
-<form class="uk-form-horizontal uk-margin-large" th:action="@{/request_submitted}" th:object="${request_form}">
+<form class="uk-form-horizontal uk-margin-large" th:action="@{/save_request}" method="post" th:object="${request_form}">
 
     <div class="uk-margin">
         <label class="uk-form-label" for="form-horizontal-text">Whose shift are you requesting to take?</label>
@@ -58,11 +58,12 @@
         <div class="uk-form-controls">
             <div class="uk-inline">
                 <span class="uk-form-icon" uk-icon="icon: calendar"></span>
-                <input th:field="*{date}"class="uk-input" type="date" data-uk-datepicker="{format:'DD.MM.YYYY'}" placeholder="(YYYY/MM/DD)">
+                <input th:field="*{date}"class="uk-input" type="date" data-uk-datepicker="{format:'DD.MM.YYYY'}" placeholder="(DD/MM/YYYY)">
             </div>
         </div>
     </div>
 
+    <button type="submit">Submit</button>
 
 </form>
 

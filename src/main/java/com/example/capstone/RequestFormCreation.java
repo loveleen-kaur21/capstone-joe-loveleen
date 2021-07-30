@@ -5,7 +5,7 @@ import java.util.Date;
 public class RequestFormCreation {
     private String fullName;
     private String shift;
-    private Date date;
+    private String date;
 
     public String getFullName() {
         return fullName;
@@ -23,11 +23,11 @@ public class RequestFormCreation {
         this.shift = shift;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
