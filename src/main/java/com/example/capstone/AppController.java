@@ -59,6 +59,9 @@ public class AppController {
     @Autowired
     private RequestRepository requestRepo;
 
+    @Autowired
+    private ShiftPage shiftPage;
+
     @GetMapping("/")
     public String viewPage() {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -158,6 +161,8 @@ public class AppController {
     @GetMapping("/user/admin_view_pending")
     public String showAdminPending(Model model) {
         model.addAttribute("user", new User());
+        List<Request> requests = requestRepo.findAll();
+        model.addAttribute("requests", requests);
         return "admin_view_pending.html";
     }
 
