@@ -17,24 +17,17 @@
 </head>
 <body>
 <div th:insert="~{fragments/navbar :: navbar}"></div>
-<h1 class="uk-flex uk-margin-top uk-flex-center">Placeholder</h1>
+<h1 class="uk-flex uk-margin-top uk-flex-center" th:text="${#dates.monthName(date)}"></h1>
 <!--<a th:text="${shift.date}" th:href="@{/user/home}?{nextStart}">Next</a>-->
 <div class="uk-overflow-auto">
     <table class="uk-table uk-table-small uk-table-divider uk-table-striped">
-        <thead>
+        <thead th:object="${d}">
         <tr>
             <th>Employees</th>
-                <div th:each="shift: ${weeklyShifts}">
-                    <div th:if="shift.id == shift.userID">
-                        <th th:text="shift.date"></th>
-                    </div>
-                </div>
-                <th>2</th>
-                <th>3</th>
-                <th>4</th>
-                <th>5</th>
-                <th>6</th>
-                <th>7</th>
+            <!--Generating a th within a for loop -->
+            <div th:each="date: ${datesList}">
+                <th th:text="${date.itself}"></th>
+            </div>
         </tr>
         </thead>
         <tbody>
@@ -44,9 +37,16 @@
         <tr th:each="user: ${listUsers}">
             <div th:if="${user.role == 'Manager'}">
                 <td th:text="${user.fullName}"></td>
-                <div th:each="shift: ${weeklyShifts}">
-                    <div th:if="${user.id == shift.userID}">
-                        <td th:text="${shift.shift}"></td>
+                <div th:each="shift: ${wShifts}">
+                    <div th:each="date: ${datesList}">
+                        <div th:if="${shift.date == date.itself}">
+                            <div th:if="${user.id == shift.userID}">
+                                <td th:text="${shift.shift}"></td>
+                            </div>
+                            <div th:unless="${user.id != shift.userID}">
+                                <td></td>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -21,4 +21,5 @@ public interface ShiftRepository extends JpaRepository<Shift, Long>{
     @Query(value = "SELECT * FROM Shift", nativeQuery = true)
     Shift findAllShift();
 
+    List<Shift> findAllByDateBetween(Date startDate, Date endDate);
 }
