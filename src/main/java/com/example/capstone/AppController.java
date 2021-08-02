@@ -64,10 +64,9 @@ public class AppController {
 //        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
 //            return "login";
 //        }
+//        Date checkingdate = new GregorianCalendar(2021, Calendar.AUGUST, 29).getTime();
         Date date =java.util.Calendar.getInstance().getTime();
-
         shiftService.generateShifts(date);
-        Date checkingdate = new GregorianCalendar(2021, Calendar.MARCH, 17).getTime();
         return "redirect:/user/home";
     }
 

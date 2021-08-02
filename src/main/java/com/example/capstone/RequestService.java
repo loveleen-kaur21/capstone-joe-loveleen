@@ -30,8 +30,11 @@ public class RequestService {
 
         LocalDate lDate = LocalDate.parse(date);
         java.util.Date dDate = java.sql.Date.valueOf(lDate);
-
+        System.out.println("ayo id " + requesteeUser.getId());
+        System.out.println("ayo shift " + shift);
+        System.out.println("ayo date " + date);
         Shift requestedShift = shiftRepo.findByUserIDAndShiftAndDate(requesteeUser.getId(), shift, dDate);
+        System.out.println("hello " + requestedShift.getId());
         Request cRequest = new Request();
         cRequest.setRequesteeID(requesteeUser.getId());
         cRequest.setRequesteeShiftID(requestedShift.getId());
