@@ -25,8 +25,8 @@
         <tr>
             <th>Employees</th>
             <!--Generating a th within a for loop -->
-            <div th:each="date: ${datesList}">
-                <th th:text="${date.itself}"></th>
+            <div th:each="date: ${shiftPage.dates()}">
+                <th th:text="${date}"></th>
             </div>
         </tr>
         </thead>
@@ -34,48 +34,23 @@
         <tr>
             <td><b>Managers</b></td>
         </tr>
-        <tr th:each="user: ${listUsers}">
-            <div th:if="${user.role == 'Manager'}">
-                <td th:text="${user.fullName}"></td>
-                <div th:each="shift: ${wShifts}">
-                    <div th:each="date: ${datesList}">
-                        <div th:if="${shift.date == date.itself}">
-                            <div th:if="${user.id == shift.userID}">
-                                <td th:text="${shift.shift}"></td>
-                            </div>
-                            <div th:unless="${user.id != shift.userID}">
-                                <td></td>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <tr th:each="user: ${shiftPage.managers()}">
+            <td th:text="${user.fullName}"></td>
+            <td th:each="date: ${shiftPage.dates()}" th:text="${shiftPage.getShift(user, date).shift}"></td>
         </tr>
         <tr>
             <td><b>PCAS</b></td>
         </tr>
-        <tr th:each="user: ${listUsers}">
-            <div th:if="${user.role == 'PCA'}">
+        <tr th:each="user: ${shiftPage.pcas()}">
                 <td th:text="${user.fullName}"></td>
-                <div th:each="shift: ${weeklyShifts}">
-                    <div th:if="${user.id == shift.userID}">
-                        <td th:text="${shift.shift}"></td>
-                    </div>
-                </div>
-            </div>
+                <td th:each="date: ${shiftPage.dates()}" th:text="${shiftPage.getShift(user, date).shift}"></td>
         </tr>
         <tr>
             <td><b>Nurses</b></td>
         </tr>
-        <tr th:each="user: ${listUsers}">
-            <div th:if="${user.role == 'Nurse'}">
+        <tr th:each="user: ${shiftPage.nurses()}">
                 <td th:text="${user.fullName}"></td>
-                <div th:each="shift: ${weeklyShifts}">
-                    <div th:if="${user.id == shift.userID}">
-                        <td th:text="${shift.shift}"></td>
-                    </div>
-                </div>
-            </div>
+                <td th:each="date: ${shiftPage.dates()}" th:text="${shiftPage.getShift(user, date).shift}"></td>
         </tr>
         <!--        <script th:inline="javascript">-->
         <!--            for (let dayCounter = 0; dayCounter < 8; i++) {-->

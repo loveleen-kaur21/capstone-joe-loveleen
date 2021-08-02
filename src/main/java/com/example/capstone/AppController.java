@@ -1,5 +1,6 @@
 package com.example.capstone;
 
+import com.example.capstone.pages.ShiftPage;
 import net.bytebuddy.utility.RandomString;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -49,6 +51,10 @@ public class AppController {
     @Autowired
     private ShiftRepository shiftRepo;
 
+    @Autowired
+    private ShiftPage shiftPage;
+
+
     @GetMapping("/")
     public String viewPage() {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -66,22 +72,39 @@ public class AppController {
     public String viewHomePage(Model model) {
         Date currentDate = java.util.Calendar.getInstance().getTime();
         customUserService.renderUser(model);
-        ArrayList<Shift> wShifts = shiftService.getShifts(model);
-        System.out.println(wShifts.size());
-//        ArrayList<Shift> sortedWeeksShifts = new ArrayList<>();
-        ArrayList<Date> wShiftsDates = new ArrayList<>();
-        for (int ind = 0; ind < wShifts.size(); ind++) {
-            wShiftsDates.add(wShifts.get(ind).getDate());
-        }
-        Date minDate = Collections.min(wShiftsDates);
-        System.out.println(minDate);
-        List<dateFromRange> list = shiftService.weekDatesList(minDate);
-        model.addAttribute("datesList", list);
-        model.addAttribute("wShifts", wShifts);
+//        shiftPage.getShift();
+//        List<User> managersList = shiftPage.managers();
+//        List<User> nursesList = shiftPage.nurses();
+//        List<User> pcasList = shiftPage.pcas();
+//        List<Date> datesList = shiftPage.dates();
+        List<User> users = userRepo.findAll();
+        List<Shift> shifts = shiftRepo.findAll();
+        shiftPage.setShiftMap(shiftPage.buildShiftMap(shifts));
+        System.out.println("lmao");
+        System.out.println(shiftPage.getShiftMap().toString());
+        model.addAttribute("shiftPage", new ShiftPage(shifts, users));
+
+//        model.addAttribute("managersList", managersList);
+//        model.addAttribute("nursesList", nursesList);
+//        model.addAttribute("pcasList", pcasList);
+//        model.addAttribute("datesList", datesList);
+//        ArrayList<Shift> wShifts = shiftService.getShifts(model);
+//        System.out.println(wShifts.size());
+////        ArrayList<Shift> sortedWeeksShifts = new ArrayList<>();
+//        ArrayList<Date> wShiftsDates = new ArrayList<>();
+//        for (int ind = 0; ind < wShifts.size(); ind++) {
+//            wShiftsDates.add(wShifts.get(ind).getDate());
+//        }
+//        Date minDate = Collections.min(wShiftsDates);
+//        System.out.println(minDate);
+//        List<dateFromRange> list = shiftService.weekDatesList(minDate);
+//        model.addAttribute("datesList", list);
+//        model.addAttribute("wShifts", wShifts);
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
 //            return "login";
 //        }
+
         return "home";
     }
 

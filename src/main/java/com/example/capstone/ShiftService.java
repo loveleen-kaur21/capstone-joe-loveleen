@@ -1,7 +1,9 @@
 package com.example.capstone;
 
 
+import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+
 
 @Service
 @Transactional
@@ -45,120 +48,48 @@ public class ShiftService {
         return calendar.getTime();
     }
 
-    public LocalDate getWeeklyDate () {
-        // getting the start date representing sunday and if it is not sunday it will subtract until it is sunday
-        Calendar c = Calendar.getInstance();
-        Date checkingDate = new GregorianCalendar(2021, Calendar.MARCH, 15).getTime();
-        long mil = System.currentTimeMillis();
-        Date date = new java.sql.Date(mil);
-        c.setTime(date);
-        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-        System.out.println(dayOfWeek + "Pain");
-        ZoneId defaultZoneId = ZoneId.systemDefault();
 
-        if (dayOfWeek == 1) {
-            Instant instant = date.toInstant();
-            LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-            return localDate;
-        } else if (dayOfWeek == 2) {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(date);
-            cal.add(Calendar.DATE, -1);
-            Date subtractDate = cal.getTime();
-            Instant instant = subtractDate.toInstant();
-            LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-            System.out.println(localDate + "man");
-            return localDate;
-        } else if (dayOfWeek == 3) {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(date);
-            cal.add(Calendar.DATE, -2);
-            Date subtractDate = cal.getTime();
-            Instant instant = subtractDate.toInstant();
-            LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-            System.out.println(localDate + "test");
-            return localDate;
-        } else if (dayOfWeek == 4) {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(date);
-            cal.add(Calendar.DATE, -3);
-            Date subtractDate = cal.getTime();
-            Instant instant = subtractDate.toInstant();
-            LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-            System.out.println(localDate + "Hi Man");
-            return localDate;
-        } else if (dayOfWeek == 5) {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(date);
-            cal.add(Calendar.DATE, -4);
-            Date subtractDate = cal.getTime();
-            Instant instant = subtractDate.toInstant();
-            LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-            System.out.println(localDate + "Hi Man");
-            return localDate;
-        } else if (dayOfWeek == 6) {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(date);
-            cal.add(Calendar.DATE, -5);
-            Date subtractDate = cal.getTime();
-            Instant instant = subtractDate.toInstant();
-            LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-            System.out.println(localDate + "Hi Man");
-            return localDate;
-        } else if (dayOfWeek == 7) {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(date);
-            cal.add(Calendar.DATE, -6);
-            Date subtractDate = cal.getTime();
-            Instant instant = subtractDate.toInstant();
-            LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-            System.out.println(localDate + "Hi Man");
-            return localDate;
-        }
 
-        return null;
-    }
-
-    public ArrayList<Shift> getShifts(Model model) {
-        ArrayList<Shift> allShifts = (ArrayList<Shift>) repo.findAll();
-        ArrayList<Shift> weeklyShifts = new ArrayList<>();
-
-        LocalDate startDate = getWeeklyDate();
-        // remember lance thing with the offset date
-        LocalDate endDate = startDate.plusDays(6);
-        ZoneId defaultZoneId = ZoneId.systemDefault();
-        Date newStartDate = Date.from(startDate.atStartOfDay(defaultZoneId).toInstant());
-        Date newEndDate = Date.from(endDate.atStartOfDay(defaultZoneId).toInstant());
-
-        for (Shift current : allShifts) {
-            Date currentDate = current.getDate();
-            Instant instant = currentDate.toInstant();
-            LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-            Date newCurrentDate = Date.from(localDate.atStartOfDay((defaultZoneId)).toInstant());
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-            System.out.println(newCurrentDate);
-            System.out.println(newStartDate);
-            System.out.println(newEndDate);
-
-            // Only add dates within the week's range
-            if (newCurrentDate.after(newStartDate) && newCurrentDate.before(newEndDate)) {
-                System.out.println("adding1 ...");
-                weeklyShifts.add(current);
-            } else if (newCurrentDate.equals(newStartDate) || newCurrentDate.equals(newEndDate)) {
-                System.out.println("adding2 ...");
-                weeklyShifts.add(current);
-            }
-        }
-        System.out.println("dates: ");
-
-        for (Shift s : weeklyShifts) {
-            System.out.println(s.getDate().toString() + " - " + s.getUserID());
-        }
-
-//        System.out.println("ollo" + weeklyShifts.size());
-        return weeklyShifts;
-    }
+//    public ArrayList<Shift> getShifts(Model model) {
+//        ArrayList<Shift> allShifts = (ArrayList<Shift>) repo.findAll();
+//        ArrayList<Shift> weeklyShifts = new ArrayList<>();
+//
+//        ZoneId defaultZoneId = ZoneId.systemDefault();
+//        Instant instant = getStartDate().toInstant();
+//        LocalDate startDate = instant.atZone(defaultZoneId).toLocalDate();
+//        LocalDate endDate = startDate.plusDays(6);
+//        Date newStartDate = Date.from(startDate.atStartOfDay(defaultZoneId).toInstant());
+//        Date newEndDate = Date.from(endDate.atStartOfDay(defaultZoneId).toInstant());
+//
+//        for (Shift current : allShifts) {
+//            Date currentDate = current.getDate();
+//            Instant instant = currentDate.toInstant();
+//            LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+//            Date newCurrentDate = Date.from(localDate.atStartOfDay((defaultZoneId)).toInstant());
+//            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//
+//            System.out.println(newCurrentDate);
+//            System.out.println(newStartDate);
+//            System.out.println(newEndDate);
+//
+//            // Only add dates within the week's range
+//            if (newCurrentDate.after(newStartDate) && newCurrentDate.before(newEndDate)) {
+//                System.out.println("adding1 ...");
+//                weeklyShifts.add(current);
+//            } else if (newCurrentDate.equals(newStartDate) || newCurrentDate.equals(newEndDate)) {
+//                System.out.println("adding2 ...");
+//                weeklyShifts.add(current);
+//            }
+//        }
+//        System.out.println("dates: ");
+//
+//        for (Shift s : weeklyShifts) {
+//            System.out.println(s.getDate().toString() + " - " + s.getUserID());
+//        }
+//
+////        System.out.println("ollo" + weeklyShifts.size());
+//        return weeklyShifts;
+//    }
 
     public ArrayList<dateFromRange> weekDatesList(Date sDate) {
         ArrayList<dateFromRange> weekDates = new ArrayList<>();
@@ -190,7 +121,7 @@ public class ShiftService {
         Shift lastShift = repo.findLastShift();
         Date lastDate = lastShift.getDate();
         lastDate = getDateWithoutTimeUsingCalendar(lastDate);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
         String strCurrentDate = dateFormat.format(currentDate);
         String strLastDate = dateFormat.format(lastDate);
         if (strLastDate.equalsIgnoreCase(strCurrentDate)) {
@@ -400,7 +331,7 @@ public class ShiftService {
         ArrayList<Long> userids;
         for (int i = 0; i < 7; i++) {
             if (newShifts.size() == 0) {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
                 String strLastDate = dateFormat.format(lastDate);
                 Calendar calendar = Calendar.getInstance();
                     Shift lastShift = repo.findLastShift();
@@ -513,12 +444,6 @@ public class ShiftService {
         return newShifts;
     }
 
-
-
-
-
-
-
     public void generateGroupBShifts(Date date) {
         ArrayList<Shift> managers = generateGroupBManagerShift(date);
 //        for (int i = 0; i < managers.size(); i++) {
@@ -548,7 +473,7 @@ public class ShiftService {
         for (int i = 0; i < 7; i++) {
 
             if (newShifts.size() == 0) {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
                 String strLastDate = dateFormat.format(lastDate);
                 Calendar calendar = Calendar.getInstance();
                     Shift lastShift = repo.findLastShift();
@@ -596,7 +521,7 @@ public class ShiftService {
         for (int i = 0; i < 7; i++) {
             if (newShifts.size() == 0) {
 
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
                 String strLastDate = dateFormat.format(lastDate);
                 Calendar calendar = Calendar.getInstance();
                     Shift lastShift = repo.findLastShift();
@@ -667,7 +592,7 @@ public class ShiftService {
         for (int i = 0; i < 7; i++) {
             if (newShifts.size() == 0) {
 
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
                 String strLastDate = dateFormat.format(lastDate);
                 Calendar calendar = Calendar.getInstance();
                     Shift lastShift = repo.findLastShift();
@@ -773,5 +698,6 @@ public class ShiftService {
         }
         return newShifts;
     }
+
 
 }
