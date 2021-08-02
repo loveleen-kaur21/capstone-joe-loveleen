@@ -30,7 +30,7 @@
 
   <h1>Request a Shift Change</h1>
 
-<form class="uk-form-horizontal uk-margin-large" th:action="@{/request_submitted}" th:object="${request_form}">
+<form class="uk-form-horizontal uk-margin-large" th:action="@{/save_request}" method="post" th:object="${request_form}">
 
     <div class="uk-margin">
         <label class="uk-form-label" for="form-horizontal-text">Whose shift are you requesting to take?</label>
@@ -41,12 +41,19 @@
 
     <div class="uk-margin">
         <label class="uk-form-label" for="form-horizontal-select">Shift</label>
-        <div class="uk-form-controls">
-            <select class="uk-select" id="form-horizontal-select">
-                <option th:field="*{shift}" th:value="Day">Day (6:30am - 2:30pm)</option>
-                <option th:field="*{shift}" th:value="Evening">Evening (2:30pm - 10:30pm)</option>
-                <option th:field="*{shift}" th:value="Night">Night (10:30pm - 6:30am)</option>
-            </select>
+        <div class="uk-form-controls" id="form-horizontal-select">
+            <input type="radio" th:field="*{shift}" id="Day" class="form-control"
+                   required value="Day"/>
+            <label for="Day">Day</label><br>
+
+            <input type="radio" th:field="*{shift}" class="form-control" id="Evening"
+                   required value="Evening"/>
+            <label for="Evening">Evening</label><br>
+
+            <input type="radio" th:field="*{shift}" class="form-control" id="Night"
+                   required value="Night"/>
+            <label for="Night">Night</label><br>
+
         </div>
     </div>
 
@@ -58,11 +65,12 @@
         <div class="uk-form-controls">
             <div class="uk-inline">
                 <span class="uk-form-icon" uk-icon="icon: calendar"></span>
-                <input th:field="*{date}"class="uk-input" type="date" data-uk-datepicker="{format:'DD.MM.YYYY'}" placeholder="(YYYY/MM/DD)">
+                <input th:field="*{date}"class="uk-input" type="date" data-uk-datepicker="{format:'DD.MM.YYYY'}" placeholder="(DD/MM/YYYY)">
             </div>
         </div>
     </div>
 
+    <button type="submit">Submit</button>
 
 </form>
 

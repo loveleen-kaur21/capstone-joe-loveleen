@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
@@ -26,10 +27,11 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.*;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 @Controller
 public class AppController {
@@ -52,8 +54,10 @@ public class AppController {
     private ShiftRepository shiftRepo;
 
     @Autowired
-    private ShiftPage shiftPage;
+    private RequestService requestService;
 
+    @Autowired
+    private RequestRepository requestRepo;
 
     @GetMapping("/")
     public String viewPage() {
@@ -62,9 +66,7 @@ public class AppController {
 //            return "login";
 //        }
         Date date =java.util.Calendar.getInstance().getTime();
-
         shiftService.generateShifts(date);
-        Date checkingdate = new GregorianCalendar(2021, Calendar.MARCH, 17).getTime();
         return "redirect:/user/home";
     }
 
@@ -175,18 +177,23 @@ public class AppController {
     public String showRequestForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("request_form", new RequestFormCreation());
+
         return "request_change";
     }
 
 
-    @PostMapping("/request_submitted")
-    public String processApplication(Request request, @AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+    @RequestMapping(value = "/save_request", method = RequestMethod.POST)
+    public String processApplication(Request request, RequestFormCreation requestFormCreation, @AuthenticationPrincipal CustomUserDetails userDetails, Model model) throws ParseException {
+        System.out.println("nate are u here");
         model.addAttribute("user", new User());
         model.addAttribute("request", new Request());
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-//        request.setRequesteeID(userId);
-//        appRepo.save(application);
-        return "request_success";
+            String username = ((CustomUserDetails)principal).getFullName();
+//
+        Request requestNow = requestService.createRequest(requestFormCreation.getFullName(), requestFormCreation.getDate(), requestFormCreation.getShift(), username);
+        requestRepo.save(requestNow);
+        return "redirect:/user/home";
     }
 
 
