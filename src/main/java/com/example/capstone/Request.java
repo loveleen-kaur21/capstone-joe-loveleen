@@ -1,9 +1,13 @@
 package com.example.capstone;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 
 import javax.persistence.*;
 import java.util.Date;
+
 
 @Entity
 @Table(name = "request")
@@ -14,10 +18,10 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "requesterID", nullable = false, unique = true)
+    @Column(name = "requesterID", nullable = false, unique = false)
     private long requesterID;
 
-    @Column(name = "requesteeID", nullable = false, unique = true)
+    @Column(name = "requesteeID", nullable = false, unique = false)
     private long requesteeID;
 
     @Column(name = "requesteeShiftID", nullable = false, unique = true)
@@ -65,5 +69,6 @@ public class Request {
     public void setIs_accepted(boolean is_accepted) {
         this.is_accepted = is_accepted;
     }
+
 }
 

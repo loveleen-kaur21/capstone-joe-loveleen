@@ -9,11 +9,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class RequestService {
-
     @Autowired
     private UserRepository userRepo;
 
@@ -45,4 +45,13 @@ public class RequestService {
         return cRequest;
 
     }
+
+    public void switchShifts (Request request) {
+        Optional<Shift> shift = shiftRepo.findById(request.getRequesteeShiftID());
+        if (shift.isPresent()){
+            shift.get().setUserID(request.getRequesterID());
+        }
+    }
+
+
 }

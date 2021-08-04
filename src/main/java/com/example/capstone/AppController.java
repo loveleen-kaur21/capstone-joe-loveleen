@@ -1,11 +1,13 @@
 package com.example.capstone;
 
+import com.example.capstone.pages.RequestPage;
 import com.example.capstone.pages.ShiftPage;
 import net.bytebuddy.utility.RandomString;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -19,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -28,10 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class AppController {
@@ -77,39 +77,12 @@ public class AppController {
     public String viewHomePage(Model model) {
         Date currentDate = java.util.Calendar.getInstance().getTime();
         customUserService.renderUser(model);
-//        shiftPage.getShift();
-//        List<User> managersList = shiftPage.managers();
-//        List<User> nursesList = shiftPage.nurses();
-//        List<User> pcasList = shiftPage.pcas();
-//        List<Date> datesList = shiftPage.dates();
         List<User> users = userRepo.findAll();
         List<Shift> shifts = shiftRepo.findAll();
         shiftPage.setShiftMap(shiftPage.buildShiftMap(shifts));
         System.out.println("lmao");
         System.out.println(shiftPage.getShiftMap().toString());
         model.addAttribute("shiftPage", new ShiftPage(shifts, users));
-
-//        model.addAttribute("managersList", managersList);
-//        model.addAttribute("nursesList", nursesList);
-//        model.addAttribute("pcasList", pcasList);
-//        model.addAttribute("datesList", datesList);
-//        ArrayList<Shift> wShifts = shiftService.getShifts(model);
-//        System.out.println(wShifts.size());
-////        ArrayList<Shift> sortedWeeksShifts = new ArrayList<>();
-//        ArrayList<Date> wShiftsDates = new ArrayList<>();
-//        for (int ind = 0; ind < wShifts.size(); ind++) {
-//            wShiftsDates.add(wShifts.get(ind).getDate());
-//        }
-//        Date minDate = Collections.min(wShiftsDates);
-//        System.out.println(minDate);
-//        List<dateFromRange> list = shiftService.weekDatesList(minDate);
-//        model.addAttribute("datesList", list);
-//        model.addAttribute("wShifts", wShifts);
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-//            return "login";
-//        }
-
         return "home";
     }
 
@@ -162,6 +135,8 @@ public class AppController {
     public String showAdminPending(Model model) {
         model.addAttribute("user", new User());
         List<Request> requests = requestRepo.findAll();
+//        requestPage.getFullName(requests);
+        model.addAttribute("requestPage", new RequestPage(requests, shiftRepo, userRepo));
         model.addAttribute("requests", requests);
         return "admin_view_pending.html";
     }
@@ -186,6 +161,32 @@ public class AppController {
         return "request_change";
     }
 
+    @GetMapping("/accept/{id}")
+    public String acceptRequest(@PathVariable Long id) {
+        Optional<Request> request = requestRepo.findById(id);
+        if (request.isPresent()) {
+            Optional<Shift> shift = shiftRepo.findById(request.get().getRequesteeShiftID());
+            if (shift.isPresent()){
+                shift.get().setUserID(request.get().getRequesterID());
+            }
+            request.get().setIs_accepted(true);
+            requestRepo.delete(request.get());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return "redirect:/user/home";
+    }
+
+    @GetMapping("/reject/{id}")
+    public String rejectRequest(@PathVariable Long id) {
+        Optional<Request> request = requestRepo.findById(id);
+        if (request.isPresent()) {
+            requestRepo.delete(request.get());
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return "redirect:/user/home";
+    }
 
     @RequestMapping(value = "/save_request", method = RequestMethod.POST)
     public String processApplication(Request request, RequestFormCreation requestFormCreation, @AuthenticationPrincipal CustomUserDetails userDetails, Model model) throws ParseException {
