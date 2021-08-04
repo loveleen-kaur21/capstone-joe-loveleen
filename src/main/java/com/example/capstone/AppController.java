@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
@@ -25,13 +24,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class AppController {
@@ -59,19 +57,22 @@ public class AppController {
     @Autowired
     private RequestRepository requestRepo;
 
+    @Autowired
+    private ShiftPage shiftPage;
+
     @GetMapping("/")
     public String viewPage() {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
 //            return "login";
 //        }
-        Date date =java.util.Calendar.getInstance().getTime();
+        Date date = java.util.Calendar.getInstance().getTime();
         shiftService.generateShifts(date);
         return "redirect:/user/home";
     }
 
     @GetMapping("/user/home")
-    public String viewHomePage(Model model) {
+    public String viewHomePage(Model model, @RequestParam(value = "query", required = false) String query) {
         Date currentDate = java.util.Calendar.getInstance().getTime();
         customUserService.renderUser(model);
 //        shiftPage.getShift();
@@ -79,29 +80,38 @@ public class AppController {
 //        List<User> nursesList = shiftPage.nurses();
 //        List<User> pcasList = shiftPage.pcas();
 //        List<Date> datesList = shiftPage.dates();
-        List<User> users = userRepo.findAll();
-        List<Shift> shifts = shiftRepo.findAll();
+        List<Shift> shifts = shiftRepo.findAllByDateBetween(
+                ShiftPage.getStartDate(currentDate),
+                ShiftPage.getEndDate(currentDate)
+        ); //find all by date between
+        var start = ShiftPage.getStartDate(currentDate);
+        var end = ShiftPage.getEndDate(currentDate);
+        System.out.println(start);
+        System.out.println(end);
+        System.out.println(shifts.size());
+        System.out.println(shiftRepo.findAll().size());
+        List<User> users;
+        if (query != null && !query.equals("")) {
+            users = userRepo.findAllByFullNameIgnoreCaseContaining(query);
+            if (users.isEmpty()) {
+                return "no_results_found";
+            }
+        } else {
+            var userIds = shifts.stream().map(Shift::getUserID).collect(Collectors.toSet());
+            users = userRepo.findAllByIdIn(userIds);
+            System.out.println(users.size());
+            System.out.println(userRepo.findAll().size());
+            if (users.isEmpty()) {
+                return "no_results_found";
+            }
+        }
         shiftPage.setShiftMap(shiftPage.buildShiftMap(shifts));
-        System.out.println("lmao");
-        System.out.println(shiftPage.getShiftMap().toString());
         model.addAttribute("shiftPage", new ShiftPage(shifts, users));
+//        model.addAttribute("date", new Date());
+//        model.addAttribute("localDateTime", LocalDateTime.now());
+//        model.addAttribute("localDate", LocalDate.now());
+        model.addAttribute("java8Instant", Instant.now());
 
-//        model.addAttribute("managersList", managersList);
-//        model.addAttribute("nursesList", nursesList);
-//        model.addAttribute("pcasList", pcasList);
-//        model.addAttribute("datesList", datesList);
-//        ArrayList<Shift> wShifts = shiftService.getShifts(model);
-//        System.out.println(wShifts.size());
-////        ArrayList<Shift> sortedWeeksShifts = new ArrayList<>();
-//        ArrayList<Date> wShiftsDates = new ArrayList<>();
-//        for (int ind = 0; ind < wShifts.size(); ind++) {
-//            wShiftsDates.add(wShifts.get(ind).getDate());
-//        }
-//        Date minDate = Collections.min(wShiftsDates);
-//        System.out.println(minDate);
-//        List<dateFromRange> list = shiftService.weekDatesList(minDate);
-//        model.addAttribute("datesList", list);
-//        model.addAttribute("wShifts", wShifts);
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
 //            return "login";
@@ -189,7 +199,7 @@ public class AppController {
         model.addAttribute("request", new Request());
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            String username = ((CustomUserDetails)principal).getFullName();
+        String username = ((CustomUserDetails) principal).getFullName();
 //
         Request requestNow = requestService.createRequest(requestFormCreation.getFullName(), requestFormCreation.getDate(), requestFormCreation.getShift(), username);
         requestRepo.save(requestNow);
