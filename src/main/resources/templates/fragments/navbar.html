@@ -24,7 +24,14 @@
       <li class="uk-parent" style="color: black;" th:if="${#authentication.getPrincipal().getRole() == 'Manager'}">
             <a th:href="@{/user/admin_view_pending}">Pending Requests</a>
       </li>
-
+      <li sec:authorize="isAuthenticated()">
+        <div class="uk-margin">
+          <form  class="uk-search uk-search-default" autocomplete="off">
+            <span uk-search-icon></span>
+            <input th:name="query" class="uk-search-input" type="search" placeholder="Search">
+          </form>
+        </div>
+      </li>
       <li sec:authorize="isAuthenticated()">
         <form th:action="@{/logout}" method="post">
           <button class="uk-button uk-button-primary uk-button-small" type="submit" value="Logout" id="logoutBTN">Logout</button>
