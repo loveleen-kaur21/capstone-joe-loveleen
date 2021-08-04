@@ -17,7 +17,7 @@
 </head>
 <body>
 <div th:insert="~{fragments/navbar :: navbar}"></div>
-<h1 class="uk-flex uk-margin-top uk-flex-center" th:text="${#dates.monthName(date)}"></h1>
+<h1 class="uk-flex uk-margin-top uk-flex-center"></h1>
 <!--<a th:text="${shift.date}" th:href="@{/user/home}?{nextStart}">Next</a>-->
 <div class="uk-overflow-auto">
     <table class="uk-table uk-table-small uk-table-divider uk-table-striped">
@@ -26,7 +26,7 @@
             <th>Employees</th>
             <!--Generating a th within a for loop -->
             <div th:each="date: ${shiftPage.dates()}">
-                <th th:text="${date}"></th>
+                <th th:text="${#dates.dayOfWeekNameShort(date) + ' ' + #dates.monthNameShort(date) + '-' + #dates.day(date)}"></th>
             </div>
         </tr>
         </thead>
