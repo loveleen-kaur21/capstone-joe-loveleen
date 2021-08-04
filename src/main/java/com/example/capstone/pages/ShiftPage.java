@@ -136,9 +136,13 @@ public class ShiftPage {
     }
 
     public List<Date> dates() {
+        return dates(getStartDate());
+    }
+
+    public List<Date> dates(Date date) {
         ArrayList<Date> weeksDates = new ArrayList<>();
         ZoneId defaultZoneId = ZoneId.systemDefault();
-        Instant instant = getStartDate().toInstant();
+        Instant instant = getStartDate(date).toInstant();
         LocalDate startDate = instant.atZone(defaultZoneId).toLocalDate();
         LocalDate endDate = startDate.plusDays(6);
 
@@ -152,6 +156,10 @@ public class ShiftPage {
         // for the dates that are relevant return the relevant dates
         return weeksDates;
 
+    }
+
+    public Date lastDate() {
+        return dates().get(6);
     }
 
 
