@@ -79,8 +79,8 @@ public class AppController {
     public String viewHomePage(Model model, @RequestParam(value = "query", required = false) String query) {
         Date currentDate = java.util.Calendar.getInstance().getTime();
         customUserService.renderUser(model);
-        List<User> users = userRepo.findAll();
-        List<Shift> shifts = shiftRepo.findAll();
+//        List<User> users = userRepo.findAll();
+//        List<Shift> shifts = shiftRepo.findAll();
 //        shiftPage.getShift();
 //        List<User> managersList = shiftPage.managers();
 //        List<User> nursesList = shiftPage.nurses();
