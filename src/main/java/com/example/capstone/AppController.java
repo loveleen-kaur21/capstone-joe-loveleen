@@ -79,23 +79,12 @@ public class AppController {
     public String viewHomePage(Model model, @RequestParam(value = "query", required = false) String query) {
         Date currentDate = java.util.Calendar.getInstance().getTime();
         customUserService.renderUser(model);
-//        List<User> users = userRepo.findAll();
-//        List<Shift> shifts = shiftRepo.findAll();
-//        shiftPage.getShift();
-//        List<User> managersList = shiftPage.managers();
-//        List<User> nursesList = shiftPage.nurses();
-//        List<User> pcasList = shiftPage.pcas();
-//        List<Date> datesList = shiftPage.dates();
         List<Shift> shifts = shiftRepo.findAllByDateBetween(
                 ShiftPage.getStartDate(currentDate),
                 ShiftPage.getEndDate(currentDate)
         ); //find all by date between
         var start = ShiftPage.getStartDate(currentDate);
         var end = ShiftPage.getEndDate(currentDate);
-        System.out.println(start);
-        System.out.println(end);
-        System.out.println(shifts.size());
-        System.out.println(shiftRepo.findAll().size());
         List<User> users;
         if (query != null && !query.equals("")) {
             users = userRepo.findAllByFullNameIgnoreCaseContaining(query);
@@ -105,8 +94,6 @@ public class AppController {
         } else {
             var userIds = shifts.stream().map(Shift::getUserID).collect(Collectors.toSet());
             users = userRepo.findAllByIdIn(userIds);
-            System.out.println(users.size());
-            System.out.println(userRepo.findAll().size());
             if (users.isEmpty()) {
                 return "no_results_found";
             }

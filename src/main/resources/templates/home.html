@@ -20,7 +20,7 @@
 <h1 class="uk-flex uk-margin-top uk-flex-center"></h1>
 <!--<a th:text="${shift.date}" th:href="@{/user/home}?{nextStart}">Next</a>-->
 <div class="uk-overflow-auto">
-    <table class="uk-table uk-table-small uk-table-divider uk-table-striped">
+    <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-striped">
         <thead th:object="${d}">
         <tr>
             <th>Employees</th>
@@ -31,25 +31,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td><b>Managers</b></td>
-        </tr>
         <tr th:each="user: ${shiftPage.managers()}">
-            <td th:text="${user.fullName}"></td>
+            <td> <span th:text="${user.fullName}"></span><span class="uk-text-light" th:text="${' - ' + user.role}"></span></td>
             <td th:each="date: ${shiftPage.dates()}" th:text="${shiftPage.getShift(user, date).shift}"></td>
         </tr>
-        <tr>
-            <td><b>PCAS</b></td>
-        </tr>
         <tr th:each="user: ${shiftPage.pcas()}">
-                <td th:text="${user.fullName}"></td>
+            <td> <span th:text="${user.fullName}"></span><span class="uk-text-light" th:text="${' - ' + user.role}"></span></td>
                 <td th:each="date: ${shiftPage.dates()}" th:text="${shiftPage.getShift(user, date).shift}"></td>
         </tr>
-        <tr>
-            <td><b>Nurses</b></td>
-        </tr>
         <tr th:each="user: ${shiftPage.nurses()}">
-                <td th:text="${user.fullName}"></td>
+            <td> <span th:text="${user.fullName}"></span><span class="uk-text-light" th:text="${' - ' + user.role}"></span></td>
                 <td th:each="date: ${shiftPage.dates()}" th:text="${shiftPage.getShift(user, date).shift}"></td>
         </tr>
         <!--        <script th:inline="javascript">-->
