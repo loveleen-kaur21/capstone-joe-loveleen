@@ -24,14 +24,14 @@
     <table class="uk-table uk-table-small uk-table-divider uk-table-striped">
         <thead th:object="${d}">
         <tr>
-            <th><a class="uk-button uk-button-secondary" th:href="@{'/previous/' + ${shiftPage.lastDate()}}"><span class="uk-margin-small-right" uk-icon="chevron-left"></span></a>
+            <th><a class="uk-button uk-button-secondary" th:href="@{'/user/home/?date=' + ${shiftPage.previous(datesList.get(0))}}"><span class="uk-margin-small-right" uk-icon="chevron-left"></span></a>
             </th>
 <!--            <th>Employees</th>-->
             <!--Generating a th within a for loop -->
             <div th:each="date: ${datesList}">
                 <th th:text="${#dates.dayOfWeekNameShort(date) + ' ' + #dates.monthNameShort(date) + '-' + #dates.day(date)}"></th>
             </div>
-            <th><a class="uk-button uk-button-secondary" th:href="@{'/next/' + ${shiftPage.lastDate()}}"><span class="uk-margin-small-right" uk-icon="chevron-right"></span></a>
+            <th><a class="uk-button uk-button-secondary" th:href="@{'/user/home/?date=' + ${shiftPage.next(datesList.get(0))}}"><span class="uk-margin-small-right" uk-icon="chevron-right"></span></a>
             </th>
         </tr>
         </thead>
@@ -41,7 +41,7 @@
         </tr>
         <tr th:each="user: ${shiftPage.managers()}">
             <td th:text="${user.fullName}"></td>
-            <td th:each="date: ${datesList)}" th:text="${shiftPage.getShift(user, date).shift}"></td>
+            <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"></td>
         </tr>
         <tr>
             <td><b>PCAS</b></td>
