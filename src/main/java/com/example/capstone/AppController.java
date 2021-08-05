@@ -99,8 +99,8 @@ public class AppController {
                 return "no_results_found";
             }
         } else {
-//            var userIds = shifts.stream().map(Shift::getUserID).collect(Collectors.toSet());
-            users = userRepo.findAll();
+            var userIds = shifts.stream().map(Shift::getUserID).collect(Collectors.toSet());
+            users = userRepo.findAllByIdIn(userIds);
             if (users.isEmpty()) {
                 return "no_results_found";
             }
