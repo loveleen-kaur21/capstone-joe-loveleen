@@ -1,45 +1,38 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head>
-  <title>Navbar</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/uikit.min.css" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <script src="js/uikit.min.js"></script>
-  <script src="js/uikit-icons.min.js"></script>
-</head>
-<body>
+<nav class="uk-navbar-container" uk-navbar th:fragment="navbar" id="navColor" xmlns:th=""
+     xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div class="uk-navbar-left">
+        <ul class="uk-navbar-nav">
+            <li class="uk-active"><a th:href="@{/user/home/}">View Schedule</a></li>
+            <li class="uk-parent"><a th:href="@{/user/request_change}">Request a Change</a></li>
+            <li class="uk-parent"
+                th:if="${#authentication.getPrincipal().getRole() == 'Nurse' || #authentication.getPrincipal().getRole() == 'PCA'}">
+                <a th:href="@{/user/user_view_pending}">USER Pending Requests</a>
+            </li>
 
+            <li class="uk-parent" style="color: black;"
+                th:if="${#authentication.getPrincipal().getRole() == 'Manager'}">
+                <a th:href="@{/user/admin_view_pending}">Pending Requests</a>
+            </li>
+            <li class="uk-margin-xlarge-right"></li>
+            <li class="uk-margin-xlarge-right"></li>
+            <li class="uk-margin-xlarge-right"></li>
+            <li class="uk-parent uk-margin-top uk-margin-xlarge-left uk-margin-right" sec:authorize="isAuthenticated()">
+                <div class="uk-margin">
+                    <form th:action="@{/user/home/}" class="uk-search uk-search-default" autocomplete="off">
+                        <span uk-search-icon></span>
+                        <input th:name="query" class="uk-search-input" type="search" placeholder="Search">
+                        <input th:name="date" type="hidden" th:value="${date}">
+                    </form>
+                </div>
+            </li>
+            <li class="uk-parent uk-margin-top" sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post">
+                    <button class="uk-button uk-button-primary uk-button" type="submit" value="Logout"
+                            id="logoutBTN">Logout
+                    </button>
+                </form>
+            </li>
 
-<nav class="uk-navbar-container" uk-navbar th:fragment="navbar">
-  <div class="uk-navbar-left">
-    <ul class="uk-navbar-nav">
-      <li class="uk-active"><a th:href="@{/user/home/}">View Schedule</a></li>
-      <li class="uk-parent"><a th:href="@{/user/request_change}">Request a Change</a></li>
-      <li class="uk-parent" th:if="${#authentication.getPrincipal().getRole() == 'Nurse' || #authentication.getPrincipal().getRole() == 'PCA'}">
-        <a th:href="@{/user/user_view_pending}">USER Pending Requests</a>
-      </li>
-
-      <li class="uk-parent" style="color: black;" th:if="${#authentication.getPrincipal().getRole() == 'Manager'}">
-            <a th:href="@{/user/admin_view_pending}">Pending Requests</a>
-      </li>
-      <li sec:authorize="isAuthenticated()">
-        <div class="uk-margin">
-          <form  class="uk-search uk-search-default" autocomplete="off">
-            <span uk-search-icon></span>
-            <input th:name="query" class="uk-search-input" type="search" placeholder="Search">
-          </form>
-        </div>
-      </li>
-      <li sec:authorize="isAuthenticated()">
-        <form th:action="@{/logout}" method="post">
-          <button class="uk-button uk-button-primary uk-button-small" type="submit" value="Logout" id="logoutBTN">Logout</button>
-        </form>
-      </li>
-
-    </ul>
-  </div>
+        </ul>
+    </div>
 </nav>
-</body>
-</html>

@@ -27,7 +27,6 @@ public class ShiftPage {
     private List<User> users;
     private HashMap<Pair<Long, Date>, Shift> shiftMap;
     private Set<Long> ids;
-    // Hash set the user ids and filter for the users with a shift relevant to the week
 
     public ShiftPage(List<Shift> shifts, List<User> users) {
         this.shifts = shifts;

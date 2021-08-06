@@ -76,11 +76,15 @@ public class AppController {
 
     @GetMapping("/user/home/")
     public String viewHomePage(@RequestParam(value = "date", required = false) Date gdate, Model model, @RequestParam(value = "query", required = false) String query) {
+        model.addAttribute("date", gdate);
         if (gdate == null) {
             long mil = System.currentTimeMillis();
             gdate = new java.sql.Date(mil);
+            model.addAttribute("searchDate", "");
         } else {
             System.out.println(gdate.getClass());
+            model.addAttribute("searchDate", gdate.toString());
+            System.out.println(gdate.toString());
         }
         System.out.println("here is " + gdate);
         Date currentDate = java.util.Calendar.getInstance().getTime();
@@ -95,6 +99,7 @@ public class AppController {
         model.addAttribute("datesList", datesList);
         if (query != null && !query.equals("")) {
             users = userRepo.findAllByFullNameIgnoreCaseContaining(query);
+
             if (users.isEmpty()) {
                 return "no_results_found";
             }
@@ -108,7 +113,7 @@ public class AppController {
         shiftPage.setShiftMap(shiftPage.buildShiftMap(shifts));
         model.addAttribute("shiftPage", new ShiftPage(shifts, users));
         model.addAttribute("java8Instant", Instant.now());
-
+        // logic for searchfield holding the date and next/prev look at it and decide what to present on page
         return "home";
     }
 
