@@ -78,14 +78,19 @@ public class AppController {
     public String viewHomePage(@RequestParam(value = "date", required = false) Date gdate, Model model, @RequestParam(value = "query", required = false) String query) {
         if (gdate == null) {
             long mil = System.currentTimeMillis();
-            gdate = new java.sql.Date(mil);
+            gdate = new Date(mil);
             model.addAttribute("searchDate", "");
+            ZoneId defaultZoneId = ZoneId.systemDefault();
+            Instant instant = gdate.toInstant();
+            LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+            gdate = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
         } else {
             System.out.println(gdate.getClass());
             model.addAttribute("searchDate", gdate.toString());
             System.out.println(gdate.toString());
         }
-        model.addAttribute("date", gdate);
+
+        model.addAttribute("date", gdate.toString());
         System.out.println("here is " + gdate);
         Date currentDate = java.util.Calendar.getInstance().getTime();
         customUserService.renderUser(model);
