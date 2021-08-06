@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="js/uikit.min.js"></script>
     <script src="js/uikit-icons.min.js"></script>
-
+    <link th:href="@{/styles/style.css}" rel="stylesheet">
     <link rel="stylesheet" href="themes/custom/my_theme/dist/uikit.my_theme.min.css" />
     <script src="vendor/jquery.js"></script>
     <script src="dist/js/uikit.min.js"></script>
@@ -28,8 +28,9 @@
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-  <h1>Request a Shift Change</h1>
+  <h1 style="font-family: 'Staatliches', cursive;">Request a Shift Change</h1>
 
+<div class="form">
 <form class="uk-form-horizontal uk-margin-large" th:action="@{/save_request}" method="post" th:object="${request_form}">
 
     <div class="uk-margin">
@@ -70,10 +71,10 @@
         </div>
     </div>
 
-    <button type="submit">Submit</button>
+    <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" type="submit">Submit</button>
 
 </form>
-
+</div>
 
 </body>
 </html>
