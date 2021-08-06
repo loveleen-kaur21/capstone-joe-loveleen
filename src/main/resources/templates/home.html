@@ -17,18 +17,18 @@
 </head>
 <body>
 <div th:insert="~{fragments/navbar :: navbar}"></div>
+
 <h1 class="uk-flex uk-margin-top uk-flex-center"></h1>
 <!--<a th:text="${shift.date}" th:href="@{/user/home}?{nextStart}">Next</a>-->
 <div class="uk-overflow-auto">
-    <table class="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-striped">
+    <table class="uk-table uk-table-small uk-table-divider uk-table-striped">
         <thead th:object="${d}">
         <tr>
-            <th>Employees</th>
             <th><a class="uk-button uk-button-secondary" th:href="@{'/user/home/?date=' + ${shiftPage.previous(datesList.get(0))}}"><span class="uk-margin-small-right" uk-icon="chevron-left"></span></a>
             </th>
-<!--            <th>Employees</th>-->
+            <!--            <th>Employees</th>-->
             <!--Generating a th within a for loop -->
-            <div th:each="date: ${shiftPage.dates()}">
+            <div th:each="date: ${datesList}">
                 <th th:text="${#dates.dayOfWeekNameShort(date) + ' ' + #dates.monthNameShort(date) + '-' + #dates.day(date)}"></th>
             </div>
             <th><a class="uk-button uk-button-secondary" th:href="@{'/user/home/?date=' + ${shiftPage.next(datesList.get(0))}}"><span class="uk-margin-small-right" uk-icon="chevron-right"></span></a>
@@ -36,10 +36,11 @@
         </tr>
         </thead>
         <tbody>
+        <tr>
+            <td><b>Managers</b></td>
+        </tr>
         <tr th:each="user: ${shiftPage.managers()}">
             <td> <span th:text="${user.fullName}"></span><span class="uk-text-light" th:text="${' - ' + user.role}"></span></td>
-            <td th:each="date: ${shiftPage.dates()}" th:text="${shiftPage.getShift(user, date).shift}"></td>
-            <td th:text="${user.fullName}"></td>
             <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"></td>
         </tr>
         <tr>
@@ -47,17 +48,15 @@
         </tr>
         <tr th:each="user: ${shiftPage.pcas()}">
             <td> <span th:text="${user.fullName}"></span><span class="uk-text-light" th:text="${' - ' + user.role}"></span></td>
-                <td th:each="date: ${shiftPage.dates()}" th:text="${shiftPage.getShift(user, date).shift}"></td>
+            <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"></td>
+        </tr>
+        <tr>
+            <td><b>Nurses</b></td>
         </tr>
         <tr th:each="user: ${shiftPage.nurses()}">
             <td> <span th:text="${user.fullName}"></span><span class="uk-text-light" th:text="${' - ' + user.role}"></span></td>
-                <td th:each="date: ${shiftPage.dates()}" th:text="${shiftPage.getShift(user, date).shift}"></td>
+            <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"></td>
         </tr>
-        <!--        <script th:inline="javascript">-->
-        <!--            for (let dayCounter = 0; dayCounter < 8; i++) {-->
-        <!--                -->
-        <!--            }-->
-        <!--        </script>-->
         </tbody>
     </table>
 </div>
