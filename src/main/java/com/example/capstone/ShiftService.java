@@ -108,12 +108,6 @@ public class ShiftService {
             weekDates.add(trial);
         }
 
-        System.out.println("look here " + weekDates);
-
-        for (dateFromRange s : weekDates) {
-            System.out.println(s.getItself().toString());
-        }
-
         return weekDates;
     }
 
@@ -129,26 +123,16 @@ public class ShiftService {
             Optional<User> lastShiftUser = userRepo.findById(lastShiftUserID);
             String lastGroup = lastShiftUser.get().getGroup();
             if (lastGroup.equals("A")) {
-                System.out.println("starting first week");
                 generateGroupBShifts(lastDate);
-                System.out.println("starting second week");
                 generateGroupAShifts(lastDate);
-                System.out.println("starting third week");
                 generateGroupBShifts(lastDate);
-                System.out.println("starting fourth week");
                 generateGroupAShifts(lastDate);
-                System.out.println("starting last week");
                 generateGroupBShifts(lastDate);
             } else {
-                System.out.println("starting first week");
                 generateGroupAShifts(lastDate);
-                System.out.println("starting second week");
                 generateGroupBShifts(lastDate);
-                System.out.println("starting third week");
                 generateGroupAShifts(lastDate);
-                System.out.println("starting fourth week");
                 generateGroupBShifts(lastDate);
-                System.out.println("starting last week");
                 generateGroupAShifts(lastDate);
             }
         }
@@ -194,11 +178,6 @@ public class ShiftService {
     public void generateGroupAShifts(Date lastDate) {
 
         ArrayList<Shift> managers = generateGroupAManagerShift(lastDate);
-//        for (int i = 0; i < managers.size(); i++) {
-//            System.out.println("group a");
-//            System.out.println(managers.get(i).getDate());
-//
-//        }
         ArrayList<Shift> pcas = generateGroupAPcaShift(lastDate);
         ArrayList<Shift> nurses = generateGroupANurseShift(lastDate);
         for (int m = 0; m < managers.size(); m++) {
@@ -446,11 +425,6 @@ public class ShiftService {
 
     public void generateGroupBShifts(Date date) {
         ArrayList<Shift> managers = generateGroupBManagerShift(date);
-//        for (int i = 0; i < managers.size(); i++) {
-//            System.out.println("group b");
-//            System.out.println(managers.get(i).getDate());
-//
-//        }
         ArrayList<Shift> nurses = generateGroupBNurseShift(date);
         ArrayList<Shift> pcas = generateGroupBPcaShift(date);
         for (int m = 0; m < managers.size(); m++) {

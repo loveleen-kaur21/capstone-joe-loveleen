@@ -2,6 +2,7 @@ package com.example.capstone;
 
 import com.example.capstone.pages.RequestPage;
 import com.example.capstone.pages.ShiftPage;
+import jdk.swing.interop.SwingInterOpUtils;
 import net.bytebuddy.utility.RandomString;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,27 +69,29 @@ public class AppController {
 
     @GetMapping("/")
     public String viewPage() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-//            return "login";
-//        }
         Date date = java.util.Calendar.getInstance().getTime();
         shiftService.generateShifts(date);
-        return "redirect:/user/home";
+        return "redirect:/user/home/";
     }
 
-    @GetMapping("/user/home")
-    public String viewHomePage(Model model, @RequestParam(value = "query", required = false) String query) {
+    @GetMapping("/user/home/")
+    public String viewHomePage(@RequestParam(value = "date", required = false) Date gdate, Model model, @RequestParam(value = "query", required = false) String query) {
+        if (gdate == null) {
+            long mil = System.currentTimeMillis();
+            gdate = new java.sql.Date(mil);
+        } else {
+            System.out.println(gdate.getClass());
+        }
+        System.out.println("here is " + gdate);
         Date currentDate = java.util.Calendar.getInstance().getTime();
         customUserService.renderUser(model);
         List<Shift> shifts = shiftRepo.findAllByDateBetween(
-                ShiftPage.getStartDate(),
-                ShiftPage.getEndDate(ShiftPage.getStartDate())
-        ); //find all by date between
-        var start = ShiftPage.getStartDate(currentDate);
-        var end = ShiftPage.getEndDate(currentDate);
+                ShiftPage.getStartDate(gdate),
+                ShiftPage.getEndDate(ShiftPage.getStartDate(gdate))
+        );
+        //find all by date between
         List<User> users;
-        List<Date> datesList = shiftPage.dates();
+        List<Date> datesList = shiftPage.dates(gdate);
         model.addAttribute("datesList", datesList);
         if (query != null && !query.equals("")) {
             users = userRepo.findAllByFullNameIgnoreCaseContaining(query);
@@ -104,15 +107,7 @@ public class AppController {
         }
         shiftPage.setShiftMap(shiftPage.buildShiftMap(shifts));
         model.addAttribute("shiftPage", new ShiftPage(shifts, users));
-//        model.addAttribute("date", new Date());
-//        model.addAttribute("localDateTime", LocalDateTime.now());
-//        model.addAttribute("localDate", LocalDate.now());
         model.addAttribute("java8Instant", Instant.now());
-
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-//            return "login";
-//        }
 
         return "home";
     }
@@ -221,7 +216,6 @@ public class AppController {
 
     @RequestMapping(value = "/save_request", method = RequestMethod.POST)
     public String processApplication(Request request, RequestFormCreation requestFormCreation, @AuthenticationPrincipal CustomUserDetails userDetails, Model model) throws ParseException {
-        System.out.println("nate are u here");
         model.addAttribute("user", new User());
         model.addAttribute("request", new Request());
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -230,7 +224,7 @@ public class AppController {
 //
         Request requestNow = requestService.createRequest(requestFormCreation.getFullName(), requestFormCreation.getDate(), requestFormCreation.getShift(), username);
         requestRepo.save(requestNow);
-        return "redirect:/user/home";
+        return "redirect:/user/home/{date}";
     }
 
     @GetMapping("/previous/{date}")

@@ -73,13 +73,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         } else if (usersB.size() > usersA.size()) {
             current.setGroup("A");
         } else if (usersB.size() < usersA.size()) {
-            System.out.println(usersA.size());
-            System.out.println(usersB.size());
             current.setGroup("B");
         } else {
             current.setGroup("A");
         }
-        System.out.println(current.getGroup());
         return current;
     }
 

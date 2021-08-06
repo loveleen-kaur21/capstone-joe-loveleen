@@ -30,9 +30,6 @@ public class RequestPage {
 
     public String getRequesteeFullName(Request request) {
         Long id = request.getRequesteeID();
-        System.out.println(id);
-        System.out.println("user ");
-        System.out.println(userRepo);
         User user = userRepo.getById(id);
         return user.getFullName();
     }
@@ -54,7 +51,6 @@ public class RequestPage {
 
         //Converting the Date to LocalDate
         LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-        System.out.println("here is " + localDate);
         DateFormat dateFormat = new SimpleDateFormat("mm-dd-yyyy hh:mm:ss");
         String strDate = dateFormat.format(date);
         String output = strDate.substring(0, 10);

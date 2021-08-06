@@ -66,13 +66,6 @@ public class ShiftPage {
         return users.stream().filter(u -> u.getRole().equals("PCA")).toList();
     }
 
-    public static Date getStartDate() {
-        // getting the start date representing sunday and if it is not sunday it will subtract until it is sunday;
-        long mil = System.currentTimeMillis();
-        Date date = new java.sql.Date(mil);
-        return getStartDate(date);
-    }
-
     public static Date getStartDate(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
@@ -125,9 +118,7 @@ public class ShiftPage {
     public static Date getEndDate(Date date) {
         Calendar c = Calendar.getInstance();
         c.setTime(getStartDate(date));
-        System.out.println(c);
         c.add(Calendar.DATE, 6);
-        System.out.println(c);
         return c.getTime();
 //        ZoneId defaultZoneId = ZoneId.systemDefault();
 //        Instant instant = date.toInstant();
@@ -135,9 +126,9 @@ public class ShiftPage {
 //        return Date.from(startDate.plusDays(5).atStartOfDay(defaultZoneId).toInstant());
     }
 
-    public List<Date> dates() {
-        return dates(getStartDate());
-    }
+//    public List<Date> dates() {
+//        return dates(getStartDate());
+//    }
 
     public List<Date> dates(Date date) {
         ArrayList<Date> weeksDates = new ArrayList<>();
@@ -158,10 +149,27 @@ public class ShiftPage {
 
     }
 
-    public Date lastDate() {
-        return dates().get(6);
+//    public Date lastDate() {
+//        return dates().get(6);
+//    }
+
+    public Date previous(Date date) {
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Instant instant = date.toInstant();
+        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+        LocalDate plusdate = localDate.minusDays(7);
+        Date prevDate = Date.from(plusdate.atStartOfDay(defaultZoneId).toInstant());
+        return prevDate;
     }
 
+    public Date next (Date date) {
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Instant instant = date.toInstant();
+        LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
+        LocalDate plusdate = localDate.plusDays(7);
+        Date nextDate = Date.from(plusdate.atStartOfDay(defaultZoneId).toInstant());
+        return nextDate;
+    }
 
     public HashMap<Pair<Long, Date>, Shift> buildShiftMap(List<Shift> shifts) {
         var shiftMap = new HashMap<Pair<Long, Date>, Shift>();
