@@ -7,9 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -19,6 +17,9 @@ public class RequestService {
 
     @Autowired
     private ShiftRepository shiftRepo;
+
+    @Autowired
+    private RequestRepository repo;
 
     public Request createRequest(String requesteeName, String date, String shift, String requesterName) throws ParseException {
         User requesteeUser = userRepo.findByFullName(requesteeName);
@@ -45,6 +46,11 @@ public class RequestService {
         if (shift.isPresent()){
             shift.get().setUserID(request.getRequesterID());
         }
+    }
+
+    public List<Request> usersRequests (Long userid) {
+        List<Request> requests = repo.findAllByrequesterID(userid);
+        return requests;
     }
 
 

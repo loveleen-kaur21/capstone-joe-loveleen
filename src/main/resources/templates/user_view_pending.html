@@ -13,5 +13,23 @@
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
+<table class="uk-table uk-table-responsive">
+    <thead class="thead-dark">
+    <tr>
+        <th>Requestee</th>
+        <th>Shift Date</th>
+        <th>Shift Type</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="request: ${userRequests}">
+        <td th:text="${requestPage.getRequesteeFullName(request)}"></td>
+        <td th:text="${requestPage.getShiftDate(request)}"></td>
+        <td th:text="${requestPage.getShiftType(request)}"></td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>
