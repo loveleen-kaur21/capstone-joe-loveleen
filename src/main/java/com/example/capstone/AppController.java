@@ -175,6 +175,11 @@ public class AppController {
     @GetMapping("/user/user_view_pending")
     public String showUserPending(Model model) {
         model.addAttribute("user", new User());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepo.findByEmail(auth.getName());
+        List<Request> userRequests = requestService.usersRequests(user.getId());
+        model.addAttribute("requestPage", new RequestPage(userRequests, shiftRepo, userRepo));
+        model.addAttribute("userRequests", userRequests);
         return "user_view_pending";
     }
 
@@ -229,7 +234,7 @@ public class AppController {
 //
         Request requestNow = requestService.createRequest(requestFormCreation.getFullName(), requestFormCreation.getDate(), requestFormCreation.getShift(), username);
         requestRepo.save(requestNow);
-        return "redirect:/user/home/{date}";
+        return "redirect:/user/home/";
     }
 
 

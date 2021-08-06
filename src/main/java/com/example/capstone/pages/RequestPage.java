@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -45,15 +47,11 @@ public class RequestPage {
         Optional<Shift> shift = shiftRepo.findById(id);
         Date date = shift.get().getDate();
         ZoneId defaultZoneId = ZoneId.systemDefault();
-
         //Converting the date to Instant
         Instant instant = date.toInstant();
-
         //Converting the Date to LocalDate
         LocalDate localDate = instant.atZone(defaultZoneId).toLocalDate();
-        DateFormat dateFormat = new SimpleDateFormat("mm-dd-yyyy hh:mm:ss");
-        String strDate = dateFormat.format(date);
-        String output = strDate.substring(0, 10);
+        String output = localDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG));
         return output;
     }
 

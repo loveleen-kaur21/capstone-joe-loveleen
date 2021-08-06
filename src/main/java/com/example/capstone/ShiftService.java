@@ -1,6 +1,7 @@
 package com.example.capstone;
 
 
+import org.apache.tomcat.jni.Local;
 import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -112,13 +113,35 @@ public class ShiftService {
     }
 
     public void generateShifts(Date currentDate) {
+        List<Shift> shifts = repo.last5weekShifts();
+        List<String> dates = new ArrayList<>();
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        for (int i = 0; i < shifts.size(); i++){
+            Date check = shifts.get(i).getDate();
+            Instant instant = check.toInstant();
+            LocalDate localcheck = instant.atZone(defaultZoneId).toLocalDate();
+            String strCheck = localcheck.toString();
+            if (!dates.contains(strCheck)){
+                dates.add(strCheck);
+            }
+        }
+        System.out.println("here is size " + dates.size());
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        Instant currentInstant = currentDate.toInstant();
+        LocalDate localCurrent = currentInstant.atZone(defaultZoneId).toLocalDate();
+        String localCurrentStr = localCurrent.toString();
+//        String strCurrentDate = dateFormat.format(currentDate);
         Shift lastShift = repo.findLastShift();
         Date lastDate = lastShift.getDate();
-        lastDate = getDateWithoutTimeUsingCalendar(lastDate);
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-        String strCurrentDate = dateFormat.format(currentDate);
-        String strLastDate = dateFormat.format(lastDate);
-        if (strLastDate.equalsIgnoreCase(strCurrentDate)) {
+        System.out.println("check valid ");
+        System.out.println(localCurrentStr);
+        for (String date: dates) {
+            System.out.println(date);
+        }
+
+
+        System.out.println(dates.contains(localCurrentStr));
+        if (dates.contains(localCurrentStr)) {
             Long lastShiftUserID = lastShift.getUserID();
             Optional<User> lastShiftUser = userRepo.findById(lastShiftUserID);
             String lastGroup = lastShiftUser.get().getGroup();
