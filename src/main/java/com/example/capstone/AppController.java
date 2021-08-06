@@ -76,7 +76,6 @@ public class AppController {
 
     @GetMapping("/user/home/")
     public String viewHomePage(@RequestParam(value = "date", required = false) Date gdate, Model model, @RequestParam(value = "query", required = false) String query) {
-        model.addAttribute("date", gdate);
         if (gdate == null) {
             long mil = System.currentTimeMillis();
             gdate = new java.sql.Date(mil);
@@ -86,6 +85,7 @@ public class AppController {
             model.addAttribute("searchDate", gdate.toString());
             System.out.println(gdate.toString());
         }
+        model.addAttribute("date", gdate);
         System.out.println("here is " + gdate);
         Date currentDate = java.util.Calendar.getInstance().getTime();
         customUserService.renderUser(model);
@@ -175,11 +175,6 @@ public class AppController {
     @GetMapping("/user/user_view_pending")
     public String showUserPending(Model model) {
         model.addAttribute("user", new User());
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepo.findByEmail(auth.getName());
-        List<Request> userRequests = requestService.usersRequests(user.getId());
-        model.addAttribute("requestPage", new RequestPage(userRequests, shiftRepo, userRepo));
-        model.addAttribute("userRequests", userRequests);
         return "user_view_pending";
     }
 
@@ -234,7 +229,7 @@ public class AppController {
 //
         Request requestNow = requestService.createRequest(requestFormCreation.getFullName(), requestFormCreation.getDate(), requestFormCreation.getShift(), username);
         requestRepo.save(requestNow);
-        return "redirect:/user/home/";
+        return "redirect:/user/home/{date}";
     }
 
 
