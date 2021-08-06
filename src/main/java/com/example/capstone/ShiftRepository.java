@@ -18,6 +18,9 @@ public interface ShiftRepository extends JpaRepository<Shift, Long>{
     @Query(value = "SELECT * FROM Shift ORDER BY date DESC, id DESC LIMIT 1", nativeQuery = true)
     Shift findLastShift();
 
+    @Query(value = "SELECT * FROM Shift ORDER BY date DESC LIMIT 840", nativeQuery = true)
+    List<Shift> last5weekShifts();
+
     @Query(value = "SELECT * FROM Shift", nativeQuery = true)
     Shift findAllShift();
 
