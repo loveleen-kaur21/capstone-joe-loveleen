@@ -1,9 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
-
-#forgot_password_pad {
-    padding-left: 220px;
-}
 
 #sign_up_button {
     background-color: #42B72A;
@@ -19,9 +15,59 @@
 
 h1 {
     text-align: center;
-    font-family: 'Staatliches', cursive;
+    font-family: 'Roboto', sans-serif;
 }
 
 .form {
     padding: 30px;
+}
+
+#request_form {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align:center;
+
+}
+
+.gradient-background {
+     background: rgb(2,0,36);
+     background: linear-gradient(180deg, rgba(0,84,255,0.365983893557423) 0%, rgba(29,29,136,0.7497373949579832) 45%, rgba(2,0,36,1) 100%);
+}
+
+form .request {
+  background-color: #3D3A4B;
+  border: 1px solid #4A4A4A;
+}
+
+#request_container {
+    align: center;
+}
+
+#wrapper {
+  background-image: url( resources/static/images/staff.jpeg );
+  margin: 0 auto;
+  position: relative;
+  height: 100%;
+  width: 100%
+}
+
+img {
+    width: 99.9%
+}
+#textbox {
+  margin-top:50px;
+  background-color: white;
+  position: absolute;
+  width: 650px;
+  height: 600px;
+  top: -12px;
+  left: 370px;
+  text-align: center;
+  border-radius: 25px;
+  padding-top: 100px;
+  padding-left: 15px;
+  padding-right: 15px;
+  opacity: 0.9;
 }
