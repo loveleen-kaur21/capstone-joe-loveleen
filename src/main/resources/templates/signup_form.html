@@ -4,6 +4,7 @@
     <title>Sign Up Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/uikit.min.css"/>
+    <link th:href="@{/styles/style.css}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/css/uikit.min.css"/>
@@ -15,66 +16,56 @@
 </head>
 <body>
 <div th:insert="~{fragments/account_navbar :: account_navbar}"></div>
-<div>
-    <div class="container text-center uk-margin-medium-top">
-        <h1>User Registration - Sign Up</h1>
-    </div>
-    <form th:action="@{/process_register}" th:object="${user}"
-          method="post" style="max-width: 600px; margin: 0 auto;">
-        <div>
-            <div class="form-group row">
-                <label class="col-4 col-form-label">E-mail: </label>
-                <div class="col-8">
-                    <input placeholder="Email" type="email" th:field="*{email}" class="form-control" required/>
-                </div>
+<div id="wrapper">
+    <img class="image" th:src="@{/images/hands.jpg}"/>
+    <div id="textbox">
+        <div id="content">
+            <div class="shifty-heading text-center">
+                <h1 style="font-family: 'Righteous', cursive; font-size: 50px;">SHIFTY</h1>
+                <h4 class="subheader">Create an account to start your scheduling.</h4>
             </div>
+            <form th:action="@{/process_register}" th:object="${user}" method="post" style="max-width: 600px; margin: 0 auto;">
+                <div class="center">
+                    <div class="form-group row">
+                        <div class="col-8">
+                            <input style="font-family: 'Raleway', sans-serif;" placeholder="Email" type="email" th:field="*{email}" class="text-center large-input" required/>
+                        </div>
+                    </div>
+                    <div class="form-group row center">
+                        <div class="col-8">
+                            <input style="font-family: 'Raleway', sans-serif;" placeholder="Password" type="password" th:field="*{password}" class="text-center large-input" required minlength="8" maxlength="20"/>
+                        </div>
+                    </div>
 
-            <div class="form-group row">
-                <label class="col-4 col-form-label">Password: </label>
-                <div class="col-8">
-                    <input placeholder="Password" type="password" th:field="*{password}" class="form-control"
-                           required minlength="8" maxlength="20"/>
-                </div>
-            </div>
+                    <div class="form-group row center">
+                        <div class="col-8">
+                            <input style="font-family: 'Raleway', sans-serif;" placeholder="Full Name" type="text" th:field="*{fullName}" class="text-center large-input" required minlength="2" maxlength="20"/>
+                        </div>
+                    </div>
 
-            <div class="form-group row">
-                <label class="col-4 col-form-label">Full Name: </label>
-                <div class="col-8">
-                    <input placeholder="Full Name" type="text" th:field="*{fullName}" class="form-control"
-                           required minlength="2" maxlength="20"/>
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <label class="col-4 col-form-label">What is your role?</label>
-                <div class="uk-flex mt-2 ml-3">
+                    <div class="form-group row center radio-div">
+                        <div class="uk-flex mt-2 ml-3">
+                            <div>
+                                <input type="radio" th:field="*{role}" id="Nurse" class="" required value="Nurse"/>
+                                <label for="Nurse" style="font-family: 'Raleway', sans-serif;">Nurse</label><br>
+                            </div>
+                            <div class="uk-margin-left">
+                                <input type="radio" th:field="*{role}" id="PCA" class="" required value="PCA"/>
+                                <label for="PCA" style="font-family: 'Raleway', sans-serif;">Personal Care Assistant</label><br>
+                            </div>
+                            <div class="uk-margin-left">
+                                <input type="radio" th:field="*{role}" class="" id="Admin" required value="Manager"/>
+                                <label for="Admin" style="font-family: 'Raleway', sans-serif;">Manager</label><br>
+                            </div>
+                        </div>
+                    </div>
                     <div>
-                        <input type="radio" th:field="*{role}" id="Nurse" class=""
-                               required value="Nurse"/>
-                        <label for="Nurse">Nurse</label><br>
+                        <button type="submit" id="sign_up_button"  class="uk-button uk-button-primary uk-width-2xlarge uk-align-center">Sign Up</button>
                     </div>
-
-                    <div class="uk-margin-left">
-                        <input type="radio" th:field="*{role}" id="PCA" class=""
-                               required value="PCA"/>
-                        <label for="PCA">Personal Care Assistant</label><br>
-                    </div>
-
-                    <div class="uk-margin-left">
-                        <input type="radio" th:field="*{role}" class="" id="Admin"
-                               required value="Manager"/>
-                        <label for="Admin">Manager</label><br>
-                    </div>
-
                 </div>
-            </div>
-
-            <div>
-                <button type="submit" id="2nd_sign_up_button"  class="uk-button uk-button-primary uk-width-2xlarge uk-align-center">Sign Up</button>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
-
 </body>
 </html>
