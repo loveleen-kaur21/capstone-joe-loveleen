@@ -17,9 +17,12 @@
 </head>
 <body>
 <div th:insert="~{fragments/account_navbar :: account_navbar}"></div>
-<div>
-    <div class="container text-center uk-margin-medium-top">
-        <h1 id="login_font">Automated Nursing Schedule</h1>
+<div id="wrapper">
+    <img class="image" th:src="@{/images/hands.jpg}"/>
+    <div id="textbox">
+        <div id="content">
+            <div class="container text-center uk-margin-medium-top">
+        <h1 style="font-family: 'Roboto', sans-serif;', cursive;" id="login_font">Shifty</h1>
     </div>
     <form th:action="@{/login}" method="post" id="login_form" style="max-width: 600px; margin: 0 auto;">
         <div class="m-3">
@@ -47,6 +50,8 @@
             </div>
         </div>
     </form>
+        </div>
+    </div>
 
 </div>
 </body>

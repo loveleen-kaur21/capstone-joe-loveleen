@@ -28,37 +28,33 @@
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-  <h1 style="font-family: 'Staatliches', cursive;">Request a Shift Change</h1>
+<div class="uk-card uk-card-primary uk-card-body uk-width-1-2@m" id="request_container">
+<div id="request_form">
 
-<div class="form">
-<form class="uk-form-horizontal uk-margin-large" th:action="@{/save_request}" method="post" th:object="${request_form}">
-
+    <form class="uk-form-horizontal uk-margin-large request" th:action="@{/save_request}" method="post" th:object="${request_form}">
+        <h1 class="uk-card-title" style="font-family: 'Roboto', sans-serif;', cursive;">Request a Shift Change</h1>
     <div class="uk-margin">
         <label class="uk-form-label" for="form-horizontal-text">Whose shift are you requesting to take?</label>
         <div class="uk-form-controls">
-            <input class="uk-input" id="form-horizontal-text" type="text" placeholder="Some text..." th:field="*{fullName}">
+            <input class="uk-input uk-form-width-medium" id="form-horizontal-text" type="text" placeholder="Some text..." th:field="*{fullName}">
         </div>
     </div>
 
     <div class="uk-margin">
         <label class="uk-form-label" for="form-horizontal-select">Shift</label>
-        <div class="uk-form-controls" id="form-horizontal-select">
-            <input type="radio" th:field="*{shift}" id="Day" class="form-control"
-                   required value="Day"/>
-            <label for="Day">Day</label><br>
+        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid" id="form-horizontal-select">
+            <label for="Day"><input type="radio" th:field="*{shift}" id="Day" class="uk-radio" required value="Day"/> Day
+            </label>
 
-            <input type="radio" th:field="*{shift}" class="form-control" id="Evening"
-                   required value="Evening"/>
-            <label for="Evening">Evening</label><br>
+            <label for="Evening"><input type="radio" th:field="*{shift}" class="uk-radio" id="Evening" required value="Evening"/>
+                Evening</label>
 
-            <input type="radio" th:field="*{shift}" class="form-control" id="Night"
-                   required value="Night"/>
-            <label for="Night">Night</label><br>
+            <label for="Night"><input type="radio" th:field="*{shift}" class="uk-radio" id="Night"
+                                      required value="Night"/>
+                Night</label>
 
         </div>
     </div>
-
-
 
 
     <div class="uk-margin">
@@ -74,6 +70,7 @@
     <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" type="submit">Submit</button>
 
 </form>
+</div>
 </div>
 
 </body>
