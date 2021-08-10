@@ -29,6 +29,9 @@ h1 {
     border-width: 1.5px;
     border-color: black;
     width: 220px;
+    position: relative;
+    bottom: 0px;
+    right: 39px;
 }
 
 #time {
@@ -84,4 +87,9 @@ img {
   padding-left: 15px;
   padding-right: 15px;
   opacity: 0.9;
+}
+
+#home_title {
+    text-align: center;
+    font-size: 50px;
 }
