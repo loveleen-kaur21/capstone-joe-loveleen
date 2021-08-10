@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" class="no-results">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/uikit.min.css"/>
+    <link th:href="@{/styles/style.css}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/css/uikit.min.css"/>
@@ -13,10 +14,15 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit-icons.min.js"></script>
     <script src="js/uikit.min.js"></script>
     <script src="js/uikit-icons.min.js"></script>
-    <title>Title</title>
+    <title>No Results</title>
 </head>
-<body>
-<div th:insert="~{fragments/navbar :: navbar}"></div>
-<h1>No results found</h1>
+<body class="no-results">
+    <div th:insert="~{fragments/navbar :: navbar}"></div>
+        <div class="center">
+            <h1 class="none-header">Oops!</h1>
+            <p class="none-p">No results, try later.</p>
+        <a class="home-button" th:href="@{/user/home/}"><i class="icon-home"></i> Go back to the home page, it's better.</a>
+    </div>
 </body>
+
 </html>
