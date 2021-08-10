@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap');
 
+body{
+    font-family: 'Raleway', sans-serif;
+}
 
 #sign_up_button {
     background-color: #42B72A;
@@ -16,6 +22,7 @@
 h1 {
     text-align: center;
     font-family: 'Roboto', sans-serif;
+    font-size: 60px;
 }
 
 .form {
@@ -70,4 +77,59 @@ img {
   padding-left: 15px;
   padding-right: 15px;
   opacity: 0.9;
+}
+
+.shifty-heading {
+    padding-bottom: 20px;
+}
+
+		.striped {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			margin: 1rem 0;
+
+			&-line {
+				flex: auto;
+				flex-basis: auto;
+				border: none;
+				outline: none;
+				height: 2px;
+				background: var(--color-grayish);
+			}
+
+			&-text {
+				font-family: inherit;
+				font-size: 1rem;
+				font-weight: 500;
+				line-height: inherit;
+				color: var(--color-black);
+				margin: 0 1rem;
+			}
+		}
+        h6 span{
+            background: #fff;
+            padding: 0 10px;
+        }
+
+        .large-input {
+            width: 570px;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            padding: .375rem .75rem;
+        }
+.center {
+    margin: 12px;
+}
+
+.subheader {
+    font-size: 15px;
+    font-family: 'Raleway', sans-serif;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.radio-div {
+    padding-left: 100px;
 }
