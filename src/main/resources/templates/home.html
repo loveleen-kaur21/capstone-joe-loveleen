@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/uikit.min.css"/>
     <link th:href="@{/styles/style.css}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -12,8 +11,6 @@
     <!-- UIkit JS -->
     <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit-icons.min.js"></script>
-    <script defer src="js/uikit.min.js"></script>
-    <script defer src="js/uikit-icons.min.js"></script>
     <title>Schedule View</title>
 </head>
 <body>
@@ -25,40 +22,50 @@
     <table class="uk-table uk-table-small uk-table-divider uk-table-striped">
         <thead th:object="${d}">
         <tr>
-            <th><a class="uk-button uk-button-secondary" th:href="@{'/user/home/?date=' + ${shiftPage.previous(datesList.get(0))}}"><span class="uk-margin-small-right" uk-icon="chevron-left"></span></a>
-            </th>
-            <!--            <th>Employees</th>-->
+            <th>Employees</th>
             <!--Generating a th within a for loop -->
             <div th:each="date: ${datesList}">
                 <th th:text="${#dates.dayOfWeekNameShort(date) + ' ' + #dates.monthNameShort(date) + '-' + #dates.day(date)}"></th>
             </div>
-            <th><a class="uk-button uk-button-secondary" th:href="@{'/user/home/?date=' + ${shiftPage.next(datesList.get(0))}}"><span class="uk-margin-small-right" uk-icon="chevron-right"></span></a>
-            </th>
+            <div class="uk-align-right uk-margin-medium-right">
+                <a class="uk-button uk-button-secondary uk-button-small"
+                   th:href="@{'/user/home/?date=' + ${shiftPage.previous(datesList.get(0))}}"><span
+                        class="uk-margin-small-right" uk-icon="chevron-left"></span></a>
+                <a class="uk-button uk-button-secondary uk-button-small"
+                   th:href="@{'/user/home/?date=' + ${shiftPage.next(datesList.get(0))}}"><span
+                        class="uk-margin-small-right" uk-icon="chevron-right"></span></a>
+            </div>
+            <div id="time_box" class="uk-margin-medium-left">
+                <h4 class="uk-margin-left uk-remove-margin-bottom uk-remove-margin-top">Schedule Times</h4>
+                <div id="time">
+                    <p class="uk-margin-left">Day: 6:30am - 2:30pm</p>
+                    <p class="uk-margin-left">Evening: 2:30 - 10:30pm</p>
+                    <p class="uk-margin-left">Night: 10:30pm - 6:30am</p>
+                </div>
+            </div>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td><b>Managers</b></td>
-        </tr>
         <tr th:each="user: ${shiftPage.managers()}">
-            <td th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}"> <span th:text="${user.fullName}"></span><span class="uk-text-light" th:text="${' - ' + user.role}"></span></td>
-            <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}" th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}"></td>
-        </tr>
-        <tr>
-
-<!--            //th:if="${#authentication.getPrincipal().getFullName() == user.fullName}"-->
-            <td><b>PCAS</b></td>
+            <td th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}">
+                <span th:text="${user.fullName}"></span><span class="uk-text-light"
+                                                              th:text="${' - ' + user.role}"></span></td>
+            <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"
+                th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}"></td>
         </tr>
         <tr th:each="user: ${shiftPage.pcas()}">
-            <td th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}"> <span th:text="${user.fullName}"></span><span class="uk-text-light" th:text="${' - ' + user.role}"></span></td>
-            <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}" th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}"></td>
-        </tr>
-        <tr>
-            <td><b>Nurses</b></td>
+            <td th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}">
+                <span th:text="${user.fullName}"></span><span class="uk-text-light"
+                                                              th:text="${' - ' + user.role}"></span></td>
+            <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"
+                th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}"></td>
         </tr>
         <tr th:each="user: ${shiftPage.nurses()}">
-            <td th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}"> <span th:text="${user.fullName}"></span><span class="uk-text-light" th:text="${' - ' + user.role}"></span></td>
-            <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}" th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}"></td>
+            <td th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}">
+                <span th:text="${user.fullName}"></span><span class="uk-text-light"
+                                                              th:text="${' - ' + user.role}"></span></td>
+            <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"
+                th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}"></td>
         </tr>
         </tbody>
     </table>

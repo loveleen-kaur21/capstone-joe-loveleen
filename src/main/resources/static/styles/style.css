@@ -25,3 +25,17 @@ h1 {
 .form {
     padding: 30px;
 }
+
+#time_box {
+    line-height: 1px;
+    font-size: 20px;
+    border-style: groove;
+    border-width: 1.5px;
+    border-color: black;
+    width: 220px;
+}
+
+#time {
+    font-size: 15px;
+    line-height: 2px;
+}

@@ -86,7 +86,6 @@ public class AppController {
             System.out.println(gdate.toString());
         }
         model.addAttribute("date", gdate);
-        System.out.println("here is " + gdate);
         Date currentDate = java.util.Calendar.getInstance().getTime();
         customUserService.renderUser(model);
         List<Shift> shifts = shiftRepo.findAllByDateBetween(
