@@ -16,7 +16,7 @@
 <body>
 <div th:insert="~{fragments/navbar :: navbar}"></div>
 
-<h1 class="uk-flex uk-margin-top uk-flex-center"></h1>
+<h1 class="uk-margin-top uk-flex-center"></h1>
 <!--<a th:text="${shift.date}" th:href="@{/user/home}?{nextStart}">Next</a>-->
 <div class="uk-overflow-auto">
     <h4 id="home_title" style="font-family: 'Righteous', cursive; font-size: 50px;">SHIFTY</h4>
@@ -28,12 +28,13 @@
             <div th:each="date: ${datesList}">
                 <th th:text="${#dates.dayOfWeekNameShort(date) + ' ' + #dates.monthNameShort(date) + '-' + #dates.day(date)}"></th>
             </div>
-            <div class="uk-align-right uk-margin-medium-right">
-                <a class="uk-button uk-button-secondary uk-button-small"
+            <div class="uk-margin-medium-center button-center">
+                <a class="uk-button-secondary button-small"
                    th:href="@{'/user/home/?date=' + ${shiftPage.previous(datesList.get(0))}}"><span
                         class="uk-margin-small-right" uk-icon="chevron-left"></span></a>
-                <a class="uk-button uk-button-secondary uk-button-small"
-                   th:href="@{'/user/home/?date=' + ${shiftPage.next(datesList.get(0))}}"><span
+                <span> </span>
+                <a class="uk-button-secondary button-small"
+                   th:href="@{'/user/home/?date=' + ${shiftPage.next(datesList.get(0))}}"> <span
                         class="uk-margin-small-right" uk-icon="chevron-right"></span></a>
             </div>
 <!--            <div id="time_box" class="uk-margin-medium-left uk-remove-margin-bottom uk-remove-margin-top">-->
