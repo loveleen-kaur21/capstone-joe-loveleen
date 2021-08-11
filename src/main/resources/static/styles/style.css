@@ -204,6 +204,10 @@ img {
     font-family: 'Raleway', sans-serif;
 }
 
+#reset_password_title {
+    font-family: 'Righteous', cursive;
+}
+
 .button-center {
     display: flex;
     flex-wrap: wrap;
