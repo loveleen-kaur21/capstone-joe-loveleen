@@ -26,7 +26,7 @@
             <th>Employees</th>
             <!--Generating a th within a for loop -->
             <div th:each="date: ${datesList}">
-                <th th:text="${#dates.dayOfWeekNameShort(date) + ' ' + #dates.monthNameShort(date) + '-' + #dates.day(date)}"></th>
+                <th class="uk-text-center" th:text="${#dates.dayOfWeekNameShort(date) + ' ' + #dates.monthNameShort(date) + '-' + #dates.day(date)}"></th>
             </div>
             <div class="uk-margin-medium-center button-center">
                 <a class="uk-button-secondary button-small"
@@ -50,23 +50,23 @@
         <tbody>
         <tr th:each="user: ${shiftPage.managers()}">
             <td th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}">
-                <span th:text="${user.fullName}"></span><span class="uk-text-light"
+                <span class="uk-text" th:text="${user.fullName}"></span><span class="uk-text-light uk-text"
                                                               th:text="${', ' + user.role}"></span></td>
-            <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"
+            <td class="uk-text uk-text-center" th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"
                 th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}"></td>
         </tr>
         <tr th:each="user: ${shiftPage.pcas()}">
-            <td th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}">
-                <span th:text="${user.fullName}"></span><span class="uk-text-light"
+            <td class="uk-text" th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}">
+                <span th:text="${user.fullName}"></span><span class="uk-text-light uk-text"
                                                               th:text="${', Personal Care Assistant'}"></span></td>
-            <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"
+            <td class="uk-text uk-text-center" th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"
                 th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}"></td>
         </tr>
         <tr th:each="user: ${shiftPage.nurses()}">
-            <td th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}">
-                <span th:text="${user.fullName}"></span><span class="uk-text-light"
+            <td class="uk-text" th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}">
+                <span th:text="${user.fullName}"></span><span class="uk-text-light uk-text"
                                                               th:text="${', ' + user.role}"></span></td>
-            <td th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"
+            <td class="uk-text uk-text-center" th:each="date: ${datesList}" th:text="${shiftPage.getShift(user, date).shift}"
                 th:style="${#authentication.getPrincipal().getFullName() == user.fullName ? 'background-color: yellow' : 'color:none'}"></td>
         </tr>
         </tbody>

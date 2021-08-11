@@ -23,10 +23,7 @@ public class RequestService {
 
     public Request createRequest(String requesteeName, String date, String shift, String requesterName) throws ParseException {
         User requesteeUser = userRepo.findByFullName(requesteeName);
-        String[] parts = date.split("-");
-        String newDate = parts[2] + "-" + parts[1] + "-" + parts[0];
 //        Date dDate=new SimpleDateFormat("dd/MM/yyyy").parse(newDate);
-
         LocalDate lDate = LocalDate.parse(date);
         java.util.Date dDate = java.sql.Date.valueOf(lDate);
         Shift requestedShift = shiftRepo.findByUserIDAndShiftAndDate(requesteeUser.getId(), shift, dDate);

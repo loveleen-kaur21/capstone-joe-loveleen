@@ -69,7 +69,8 @@ public class AppController {
 
     @GetMapping("/")
     public String viewPage() {
-        Date date = java.util.Calendar.getInstance().getTime();
+        Date date = new GregorianCalendar(2021, Calendar.OCTOBER, 3).getTime();
+//        Date date = java.util.Calendar.getInstance().getTime();
         shiftService.generateShifts(date);
         return "redirect:/user/home/";
     }
@@ -192,7 +193,10 @@ public class AppController {
     @GetMapping("/user/request_change")
     public String showRequestForm(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("request_form", new RequestFormCreation());
+        RequestFormCreation newR = new RequestFormCreation();
+        model.addAttribute("request_form", newR);
+        System.out.println("showing ");
+        System.out.println(newR.getDate());
 
         return "request_change";
     }

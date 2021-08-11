@@ -6,7 +6,7 @@
             <li class="uk-parent"><a th:href="@{/user/request_change}">Request a Change</a></li>
             <li class="uk-parent"
                 th:if="${#authentication.getPrincipal().getRole() == 'Nurse' || #authentication.getPrincipal().getRole() == 'PCA'}">
-                <a th:href="@{/user/user_view_pending}">USER Pending Requests</a>
+                <a th:href="@{/user/user_view_pending}">Pending Requests</a>
             </li>
 
             <li class="uk-parent" style="color: black;"
