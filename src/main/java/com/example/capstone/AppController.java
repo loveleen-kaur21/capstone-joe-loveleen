@@ -238,7 +238,7 @@ public class AppController {
 //
         Request requestNow = requestService.createRequest(requestFormCreation.getFullName(), requestFormCreation.getDate(), requestFormCreation.getShift(), username);
         requestRepo.save(requestNow);
-        return "redirect:/user/home/{date}";
+        return "redirect:/user/home/";
     }
 
 
