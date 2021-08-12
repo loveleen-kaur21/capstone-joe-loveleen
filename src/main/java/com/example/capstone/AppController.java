@@ -181,6 +181,9 @@ public class AppController {
     @GetMapping("/user/user_view_pending")
     public String showUserPending(Model model) {
         model.addAttribute("user", new User());
+        List<Request> requests = requestRepo.findAll();
+        model.addAttribute("requestPage", new RequestPage(requests, shiftRepo, userRepo));
+        model.addAttribute("userRequests", requests);
         return "user_view_pending";
     }
 

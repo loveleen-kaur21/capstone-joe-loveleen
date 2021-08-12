@@ -203,15 +203,11 @@ public class ShiftService {
         ArrayList<Shift> managers = generateGroupAManagerShift(lastDate);
         ArrayList<Shift> pcas = generateGroupAPcaShift(lastDate);
         ArrayList<Shift> nurses = generateGroupANurseShift(lastDate);
-        for (int m = 0; m < managers.size(); m++) {
-            repo.save(managers.get(m));
-        }
-        for (int p = 0; p < pcas.size(); p++) {
-            repo.save(pcas.get(p));
-        }
-        for (int n = 0; n < nurses.size(); n++) {
-            repo.save(nurses.get(n));
-        }
+        List <Shift> allShifts = new ArrayList<>();
+        allShifts.addAll(managers);
+        allShifts.addAll(pcas);
+        allShifts.addAll(nurses);
+        repo.saveAll(allShifts);
     }
 
 
@@ -450,15 +446,11 @@ public class ShiftService {
         ArrayList<Shift> managers = generateGroupBManagerShift(date);
         ArrayList<Shift> nurses = generateGroupBNurseShift(date);
         ArrayList<Shift> pcas = generateGroupBPcaShift(date);
-        for (int m = 0; m < managers.size(); m++) {
-            repo.save(managers.get(m));
-        }
-        for (int n = 0; n < nurses.size(); n++) {
-            repo.save(nurses.get(n));
-        }
-        for (int p = 0; p < pcas.size(); p++) {
-            repo.save(pcas.get(p));
-        }
+        List <Shift> allShifts = new ArrayList<>();
+        allShifts.addAll(managers);
+        allShifts.addAll(pcas);
+        allShifts.addAll(nurses);
+        repo.saveAll(allShifts);
     }
 
 

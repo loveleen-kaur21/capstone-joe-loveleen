@@ -26,9 +26,9 @@
     </thead>
     <tbody>
     <tr th:each="request: ${userRequests}">
-        <td th:text="${requestPage.getRequesteeFullName(request)}"></td>
-        <td th:text="${requestPage.getShiftDate(request)}"></td>
-        <td th:text="${requestPage.getShiftType(request)}"></td>
+        <td th:if="${#authentication.getPrincipal().getFullName() == requestPage.getRequesterFullName(request)}" th:text="${requestPage.getRequesteeFullName(request)}"></td>
+        <td th:if="${#authentication.getPrincipal().getFullName() == requestPage.getRequesterFullName(request)}" th:text="${requestPage.getShiftDate(request)}"></td>
+        <td th:if="${#authentication.getPrincipal().getFullName() == requestPage.getRequesterFullName(request)}" th:text="${requestPage.getShiftType(request)}"></td>
     </tr>
     </tbody>
 </table>
