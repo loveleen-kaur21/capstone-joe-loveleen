@@ -28,9 +28,8 @@
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<div class="uk-card uk-card-primary uk-card-body uk-width-1-2@m uk-align-center" id="request_container">
+<div class="uk-card uk-card-primary uk-card-body" id="request_container" style="height: 90vh;">
 <div id="request_form">
-
     <form class="uk-form-horizontal uk-margin-large request" th:action="@{/save_request}" method="post" th:object="${request_form}">
         <h1 class="uk-card-title" style="font-family: 'Roboto', sans-serif;', cursive;">Request a Shift Change</h1>
     <div class="uk-margin">
